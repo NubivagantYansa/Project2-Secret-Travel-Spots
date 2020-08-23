@@ -1,0 +1,11 @@
+# Dependency directory
+node_modules
+
+# Debug log from npm
+npm-debug.log
+
+#env file should be created after cloning the repository or creating it locally. Never push it
+.env
+
+# added for maintainance purposes - not best  practice
+package-lock.json 
