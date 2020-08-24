@@ -151,7 +151,6 @@ App to explore local travel spots.
     		username: String, required: true,
      		password: String, minlength: 6, maxlength: 12,
      		spots: [{ type: Schema.Types.ObjectId, ref: 'Spot' }]
-     		}
 })
 ```
 
