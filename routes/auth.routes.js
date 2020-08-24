@@ -45,6 +45,7 @@ router.post("/signup", (req, res, next) => {
       });
     })
     .then((userFromDB) => {
+      req.session.currentUser = userFromDB;
       console.log("Newly created user is: ", userFromDB);
       res.redirect("user-profile");
     })
@@ -108,6 +109,7 @@ router.post("/logout", (req, res) => {
 
 router.get("/user-profile", (req, res) => {
   // console.log('your sess exp: ', req.session.cookie.expires);
-  res.render("user/user-profile", { userInSession: req.session.currentUser });
+  console.log(req.session)
+  res.render("user/user-profile", { user: req.session.currentUser });
 });
 module.exports = router;

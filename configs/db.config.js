@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+console.log(process.env.DB_NAME);
 
 mongoose
   .connect(`mongodb://localhost/${process.env.DB_NAME}`, {
