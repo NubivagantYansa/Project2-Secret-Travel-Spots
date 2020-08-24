@@ -1,11 +1,11 @@
-// require session
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+const mongoose = require("mongoose");
 
- // use session
 module.exports = (app) => {
- 
+  // use session
   app.use(
     session({
-      // in the network tab, we will be able to see the cookie - this secret is getting hashed inside that cookie
       secret: process.env.SESS_SECRET,
       resave: false,
       saveUninitialized: true,
@@ -20,4 +20,3 @@ module.exports = (app) => {
     })
   );
 };
- 

@@ -9,7 +9,8 @@ const users = [
   {
     username: "test",
     email: "test@test.com",
-    passwordHash: "TestTest123!",
+    passwordHash:
+      "$2a$10$YZbxJDIQx0df.lCGW8.6Lecu9ElmuksVrP9NJkftmWzIiEQw.4dvy",
   },
 ];
 
