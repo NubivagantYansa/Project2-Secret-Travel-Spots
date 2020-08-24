@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // default value for title local
-app.locals.title = 'Express boilerplate made with love by your instructional team:) <3';
+app.locals.title = 'Secret Travel Spots';
 
 // const index = require('./routes/index');
 // app.use('/', index);

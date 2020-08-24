@@ -14,13 +14,13 @@ App to explore local travel spots.
 - **signup** - As a user I want to sign up on the webpage so that I can explore the app.
 - **explore** - As a user I want to be able to see spots added by the community.
 - **search-results** - As a user I want to be able to filter the results.
-- **single-spot** - As a user I want to be able to see the details of the selected spot.
+- **spot-details** - As a user I want to be able to see the details of the selected spot.
 - **about** - As a user I want to know what the app is about and how to use it.
 - **user-profile** As a user I want to check/edit my profile information, add/edit new spots in my collection and edit my favourites library.
-- **add-spot** As a user I want to be able to add new spots to my collections.
+- **create-spot** As a user I want to be able to add new spots to my collections.
 - **edit-spot** - As a user I want to be able to edit the info for each spot I previously added.
-- **my-spots** - As a user I want to be able to see all the spots I created.
-- **my-favourites** - As a user I want to be able to see all the spots I added in my favourites.
+- **user-spots** - As a user I want to be able to see all the spots I created.
+- **favourite-spots** - As a user I want to be able to see all the spots I added in my favourites.
 - **edit-profile** - As a user I want to be able to edit my profile.
 - **delete-profile** - As a user I want to be able to receive a confirmation once my profile has been deleted.
 - **logout** - As a user I want to be able to log out from the webpage so that I can make sure no one will access my account.
@@ -30,7 +30,7 @@ App to explore local travel spots.
 ## API routes (back-end)
 
 - GET /
-  - renders home.hbs
+  - renders index.hbs
 - GET /auth/signup
 
   - redirects to / if user logged in
@@ -47,11 +47,11 @@ App to explore local travel spots.
   - renders login.hbs
 
 - POST /auth/login
-- redirects to explore.hbs
-- body:
 
-  - email
-  - password
+  - redirects to explore.hbs
+  - body:
+    - email
+    - password
 
 - POST /auth/logout
 
@@ -63,52 +63,64 @@ App to explore local travel spots.
   - renders explore.hbs
   - redirects to search-results.hbs
     (search action)
-  - body: - id - name - description - location - category
+    - body:
+      - id
+      - name
+      - description
+      - location
+      - category
 
-- GET /explore/:id - renders single-spot.hbs - (populates with comments) - body: - id - name - description - location - category - comments
+- GET /explore/:id - renders spot-details.hbs - (populates with comments)
+  - body:
+    - id
+    - name
+    - description
+    - location
+    - category
+    - comments
 
 - POST /explore/:id/comments
 
-  - renders single-spot.hbs
+  - renders spot-details.hbs
 
 - GET /search-results - renders search-results.hbs - includes the list of spots (partial)
   (search action) - body: - id - name - description - location - category
 
 - GET /search-results/:id
 
-  - renders single-spot.hbs
+  - renders spot-details.hbs
   - (populates with comments) - body: - id - name - description - location - category - comments
 
 - POST /search-results/:id/comments
 
-  - renders single-spot.hbs
+  - renders spot-details.hbs
 
 - GET /about - renders about.hbs
 
 - GET /profile - renders user-profile.hbs
 
-- GET /add-spot - renders add-spot.hbs
+- GET /create-spot - renders create-spot.hbs
 
-- POST /add-spot - redirect to my-spot.hbs - body: - id - name - description - location (API mapbox) - category
+- POST /create-spot - redirect to user-spots.hbs - body: - id - name - description - location (API mapbox) - category
 
 - GET /edit-spot - renders edit-spot.hbs
 
-- POST /edit-spot - redirect to my-spot.hbs - body: - id - name - description - location (API mapbox) - category
+- POST /edit-spot - redirect to user-spots.hbs - body: - id - name - description - location (API mapbox) - category
 
-- POST /delete-spot - redirect to my-spot.hbs - body: - id - name - description - location (API mapbox) - category
+- POST /delete-spot - redirect to user-spots.hbs - body: - id - name - description - location (API mapbox) - category
 
-- GET /my-spots - renders my-spots.hbs
+- GET /user-spots - renders user-spots.hbs
 
-- GET /my-spots/:id
+- GET /user-spots/:id
 
-  - renders single-spot.hbs
+  - renders spot-details.hbs
   - (populates with comments) - body: - id - name - description - location (API mapbox) - category - comments
 
-- GET /my-favourites - renders my-favourites.hbs
+- GET /favourite-spots - renders favourite-spots.hbs
 
-- GET /my-favourites/:id
+- GET /favourite-spots/:id
 
-  - renders single-spot.hbs
+  - renders spot-details.hbs
   - (populates with comments) - body: - id - name - description - location - category - comments
 
 - GET /edit-profile
@@ -171,19 +183,19 @@ content: String, required: true,
 
 ## Backlog
 
-- Single-spot.hbs
+- spot-details.hbs
   - Image
   - Rating (+ searchable)
 - Explore
   - snapshot of map from API
   - pins for locations
-- single-spot.hbs
+- spot-details.hbs
 
   - Add a memory (private)
 
 - memories.hbs
   - Display all the memories (filters)
-- Possibility to slide insted of having list in explore.hbs, Search-results.hbs, my-spots.hbs, my-favourites.hbs
+- Possibility to slide insted of having list in explore.hbs, search-results.hbs, user-spots.hbs, favourite-spots.hbs
 
 <br>
 
