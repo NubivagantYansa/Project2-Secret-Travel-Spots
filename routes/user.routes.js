@@ -122,9 +122,9 @@ router.get("/edit-profile", isLoggedMiddleware, (req, res) => {
 //.EDIT user's profile
 router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
-  const { username, email } = req.body;
-  console.log("body post", JSON.stringify(req.body, null, 4));
-  console.log("session", req.session.currentUser._id);
+  // const { username, email } = req.body;
+  // console.log("body post", JSON.stringify(req.body, null, 4));
+  // console.log("session", req.session.currentUser._id);
 
   //validation for empty fields:
   //.1
@@ -158,9 +158,8 @@ router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
 });
 
 //.DELETE user's profile
-
 router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
-  const { userId } = req.params;
+  const userId = req.session.currentUser._id;
   User.findByIdAndDelete(userId)
     .then(() => res.redirect("/signup"))
     .catch((err) => console.log(`error while deleting user ${err}`));
