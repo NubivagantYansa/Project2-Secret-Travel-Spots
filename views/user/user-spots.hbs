@@ -1,0 +1,20 @@
+{{!-- {{#if user}} --}}
+<div class="my-spots">
+  <h2>My Spots</h2>
+  <div>
+      {{#each spots}}
+      <div>
+        <h4>name: {{this.name}}</h4>
+        <p>description: {{this.description}}</p>
+        <p>location: {{this.location}}</p>
+        <p>category: {{this.category}}</p>
+        <p><a href="/user-profile/my-spots/{{this.id}}">See more</a> ||<a href="/user-profile/my-spots/{{this.id}}/edit">Edit</a></p>
+      </div>
+      <hr>
+    {{/each}}
+  </div>
+</div>
+
+{{!-- {{else}}
+<p>Still no logged in user, sorry!</p>
+{{/if}} --}}

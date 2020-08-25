@@ -14,6 +14,7 @@ const debug = require("debug")(
   `${app_name}:${path.basename(__filename).split(".")[0]}`
 );
 
+//use session
 const app = express();
 require("./configs/session.config")(app);
 
@@ -39,5 +40,6 @@ app.locals.title = "Secret Travel Spots";
 // Routes
 app.use("/", require("./routes/index.routes"));
 app.use("/", require("./routes/auth.routes"));
+app.use("/", require("./routes/user.routes"));
 
 module.exports = app;

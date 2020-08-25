@@ -1,7 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
 const User = require("../models/User.model");
-//const Spot = require("../models/Spot.model");
+const Spot = require("../models/Spot.model");
 console.log(process.env.DB_NAME);
 // require database configuration
 require("../configs/db.config");

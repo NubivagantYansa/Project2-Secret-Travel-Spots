@@ -3,14 +3,14 @@ const { Schema, model } = mongoose;
 
 const spotSchema = new Schema(
   {
-    author: { type: Schema.Types.ObjectId, ref: "User" },
+    author: { type: Schema.Types.ObjectId, ref: 'User' },
     name: {
       type: String,
       required: [true, "Name is required."],
     },
     description: {
       type: String,
-      required: [true, "Desccription is required."],
+      required: [true, "Description is required."],
     },
     location: {
       type: String,
@@ -19,7 +19,8 @@ const spotSchema = new Schema(
     },
     category: {
       type: String,
-      required: [true, "Desccription is required."],
+      enum: ['To eat', 'To walk', 'To bike', 'To hike', 'To visit', 'For sunset'],
+      required: [true, "Category is required, and you must choose of these"],
     },
     comments: { type: Schema.Types.ObjectId, ref: "Comment" },
   },

@@ -47,7 +47,7 @@ router.post("/signup", (req, res, next) => {
     .then((userFromDB) => {
       req.session.currentUser = userFromDB;
       console.log("Newly created user is: ", userFromDB);
-      res.redirect("user-profile");
+      res.redirect("/user-profile");
     })
     .catch((error) => {
       if (error instanceof mongoose.Error.ValidationError) {
@@ -77,7 +77,7 @@ router.post("/login", (req, res, next) => {
 
   if (email === "" || password === "") {
     res.render("auth/login", {
-      errorMessage: "Please enter both, email and password to login.",
+      errorMessage: "Please enter both email and password to login.",
     });
     return;
   }
@@ -86,7 +86,7 @@ router.post("/login", (req, res, next) => {
     .then((user) => {
       if (!user) {
         res.render("auth/login", {
-          errorMessage: "Email is not registered. Try with other email.",
+          errorMessage: "Email is not registered. Try with another email.",
         });
         return;
       } else if (bcryptjs.compareSync(password, user.passwordHash)) {
@@ -107,9 +107,14 @@ router.post("/logout", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/user-profile", (req, res) => {
+router.get("/user-profile", (req,res,next) =>{
   // console.log('your sess exp: ', req.session.cookie.expires);
-  console.log(req.session)
-  res.render("user/user-profile", { user: req.session.currentUser });
-});
+  if (req.session.currentUser) {
+    res.render("user/user-profile", { user: req.session.currentUser });
+  } else {
+    res.redirect("/login");
+  }
+})
+
+
 module.exports = router;

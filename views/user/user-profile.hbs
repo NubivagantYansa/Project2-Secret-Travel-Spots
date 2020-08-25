@@ -2,10 +2,16 @@
 <h2>Welcome, {{ user.username }}!</h2>
 <p>This is your profile page my friend!</p>
 <button>
-  <a href="/userProfile">Reload the page</a>
+  <a href="/user-profile">Reload the page</a>
 </button>
-<a href="/users/main">Main</a>
-<a href="/users/private">Private</a>
+<a href="/user-profile/create-spot">New Spot</a>
+<a href="/user-profile/my-spots">My Spots</a>
+<a href="">Favourites</a>
+<a href="/user-profile/edit-profile">Edite profile</a>
+<form action="/user-profile/{{user._id}}/edit-profile/delete" method="post">
+  <button type="submit">Delete profile</button>
+</form> 
+
 
 {{else}}
 <p>Still no logged in user, sorry!</p>
