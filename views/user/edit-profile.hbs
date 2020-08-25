@@ -1,15 +1,17 @@
 <h2>Edit here your details</h2>
-<form action="'/user-profile/edit-profile" method="post">
+<form action="/user-profile/edit-profile" method="post">
 
   <label for="username-input">Username:</label>
-  <input type="text" name="username" id="username-input" value="{{username}}"/>
+  <input type="text" name="username" id="username-input" placeholder="{{user.username}}" />
 
   <label for="email-input">email:</label>
-  <input type="text" name="email" id="email-input" value="{{email}}"/>
-
-  <label for="password">password:</label>
-  <input type="text" name="password" id="password-input" value="{{password}}"/>
+  <input type="text" name="email" id="email-input" placeholder="{{user.email}}" />
 
   <button type="submit">Update</button>
 
 </form>
+
+
+{{#if errorMessage}}
+<p class="error">{{errorMessage}}</p>
+{{/if}}

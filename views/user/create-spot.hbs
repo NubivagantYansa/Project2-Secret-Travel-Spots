@@ -2,27 +2,37 @@
 
 <h2>Add a new spot</h2>
 <form action="/user-profile/create-spot" method="post">
+  <div>
+    <label for="name-input">Name:</label>
+    <input type="text" name="name" id="name-input" />
+  </div>
+  <div>
+    <label for="description-input">Description:</label>
+    <textarea name="description" id="description-input" cols="30" rows="5"></textarea>
+  </div>
+  <div>
+    <label for="location-input">Location:</label>
+    <input type="text" name="location" id="location-input" />
+  </div>
+  <div>
+    <label for="category-input">Category:</label>
+    <select id="category-input" name="category">
+      <option value="To visit">Beach</option>
+      <option value="For sunset">For sunrise</option>
+      <option value="For sunset">For sunset</option>
+      <option value="To bike">To bike</option>
+      <option value="To eat">To eat</option>
+      <option value="To hike">To hike</option>
+      <option value="To hike">To relax</option>
+      <option value="To walk">To walk</option>
+      <option value="To visit">To visit</option>
+    </select>
 
-  <label for="name-input">Name:</label>
-  <input type="text" name="name" id="name-input" />
-
-  <label for="description-input">Description:</label>
-  <input type="text" name="description" id="description-input" />
-
-  <label for="location-input">Location:</label>
-  <input type="text" name="location" id="location-input" />
-
-  <label for="category-input">Category:</label>
-  <select id="category-input" name="category">
-    <option value="To eat">To eat</option>
-    <option value="To walk">To walk</option>
-    <option value="To bike">To bike</option>
-    <option value="To hike">To hike</option>
-    <option value="To visit">To visit</option>
-    <option value="For sunset">For sunset</option>
-  </select>
-
-  <button type="submit">Submit</button>
+    <button type="submit">Submit</button>
+  </div>
+  <div>
+    <a href="/user-profile">Back</a>
+  </div>
 
 </form>
 {{!-- 

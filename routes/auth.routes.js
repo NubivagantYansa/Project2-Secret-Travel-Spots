@@ -5,9 +5,7 @@ const saltRounds = 10;
 const User = require("../models/User.model");
 const mongoose = require("mongoose");
 
-////////////////////////////////////////////////////////////////////////
 // ============================/. SIGN UP ./=============================>
-////////////////////////////////////////////////////////////////////////
 
 // .Display the signup form to users
 router.get("/signup", (req, res) => res.render("auth/signup"));
@@ -25,14 +23,14 @@ router.post("/signup", (req, res, next) => {
   }
 
   // strong password:
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
-  if (!regex.test(password)) {
-    res.status(500).render("auth/signup", {
-      errorMessage:
-        "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.",
-    });
-    return;
-  }
+  // const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+  // if (!regex.test(password)) {
+  //   res.status(500).render("auth/signup", {
+  //     errorMessage:
+  //       "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.",
+  //   });
+  //   return;
+  // }
 
   bcryptjs
     .genSalt(saltRounds)
@@ -63,9 +61,7 @@ router.post("/signup", (req, res, next) => {
     });
 });
 
-//////////////////////////////////////////////////////////////////////////////////
 // ============================/. LOGIN ./========================================>
-//////////////////////////////////////////////////////////////////////////////////
 
 // .Display the login form to users
 router.get("/login", (req, res) => res.render("auth/login"));
@@ -98,23 +94,21 @@ router.post("/login", (req, res, next) => {
     })
     .catch((error) => next(error));
 });
-//////////////////////////////////////////////////////////////////////////////////
+
 // ============================/. LOGOUT ./=======================================>
-//////////////////////////////////////////////////////////////////////////////////
 
 router.post("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
 
-router.get("/user-profile", (req,res,next) =>{
+router.get("/user-profile", (req, res, next) => {
   // console.log('your sess exp: ', req.session.cookie.expires);
   if (req.session.currentUser) {
     res.render("user/user-profile", { user: req.session.currentUser });
   } else {
     res.redirect("/login");
   }
-})
-
+});
 
 module.exports = router;

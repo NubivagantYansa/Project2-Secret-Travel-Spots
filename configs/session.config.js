@@ -1,4 +1,3 @@
-
 //require session
 const session = require("express-session");
 
@@ -14,7 +13,7 @@ module.exports = (app) => {
       resave: false,
       saveUninitialized: true,
       cookie: {
-        maxAge: 120000, // 2 * 60 * 1000 ms === 2 min
+        //maxAge: 120000, // 2 * 60 * 1000 ms === 2 min
       },
       store: new MongoStore({
         mongooseConnection: mongoose.connection,

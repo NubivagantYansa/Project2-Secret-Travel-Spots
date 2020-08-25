@@ -1,142 +1,169 @@
-const express = require('express');
-const router  = express.Router();
+const express = require("express");
+const router = express.Router();
 
 // const bcryptjs = require('bcryptjs');
 // const saltRounds = 10;
-const User = require('../models/User.model');
-const Spot = require('../models/Spot.model')
+const User = require("../models/User.model");
+const Spot = require("../models/Spot.model");
 // const Comment = require('../models/Comment.model')
 // const mongoose = require('mongoose');
 
+const isLoggedMiddleware = (req, res, next) => {
+  if (!req.session.currentUser) {
+    return res.redirect("/login");
+  }
+  next();
+};
 
-//showing all user's spots
-router.get("/user-profile/my-spots", (req,res,next) => {
-    Spot.find()
+//.SHOW ALL user's spots
+router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
+  Spot.find({ author: req.session.currentUser._id })
     // ({author: req.session.currentUser._id})
-    // .populate('author')
-    .then(spotsFromDb => {
-        console.log(`spots ${spotsFromDb} here`)
-        res.render("user/user-spots", {spots: spotsFromDb})
+    .populate("author")
+    .then((spotsFromDb) => {
+      console.log(`spots ${JSON.stringify(spotsFromDb, null, 4)} here`);
+      res.render("user/user-spots", { spots: spotsFromDb });
     })
-    .catch((err) => console.log(`something happened while getting movies ${err}`))
-})
+    .catch((err) =>
+      console.log(`something happened while getting movies ${err}`)
+    );
+});
 
-//showing create new spot page
-router.get("/user-profile/create-spot", (req,res) => {
-  if(req.session.currentUser) {
-    res.render("user/create-spot")
-  } else {
-    res.redirect("/login");
-  }
-})
+//.Show CREATE new spot page
+router.get("/create-spot", isLoggedMiddleware, (req, res) => {
+  res.render("user/create-spot");
+});
 
-//creating a new spot
-router.post("/user-profile/create-spot", (req,res) => {
-  if(req.session.currentUser) {
-    const {name, description, location, category} = req.body;
-    Spot.create({name, description, location, category})
-    .then(res.redirect('/user-profile'))
-    .catch((err)=> console.log(`error while creating a new spot ${err}`))
-  } else {
-    res.redirect("/login");
-  }
-})
+//.CREATE a new spot
+router.post("/create-spot", isLoggedMiddleware, (req, res) => {
+  const { name, description, location, category } = req.body;
+  Spot.create({
+    name,
+    description,
+    location,
+    category,
+    author: req.session.currentUser._id,
+  })
+    .then(res.redirect("/user-profile"))
+    .catch((err) => console.log(`error while creating a new spot ${err}`));
+});
 
-//showing a single spot from my spots
-router.get('/user-profile/my-spots/:spotId', (req,res,next) => {
-    const {spotId} = req.params;
-    Spot.findById(spotId)
-    .then(c => {
-        console.log(`one spot is showing ${singleSpot}`)
-        res.render('spot-details', singleSpot)
+// function getAllSpots(req,res) {
+//   Spot.find().populate("author").then(spots=> {
+//     res.render("a beautiful view", spots)
+//   }).catch(console.error)
+// }
+
+// router.get("/explore", getAllSpots)
+
+//.Show a SINGLE SPOT from user spots
+router.get("/user-spots/:spotId", (req, res, next) => {
+  const { spotId } = req.params;
+  Spot.findById(spotId)
+    .then((singleSpot) => {
+      console.log(`one spot is showing ${singleSpot}`);
+      res.render("spot-details", singleSpot);
     })
-    .catch((err) => console.log(`an error occurred while showing a spot ${err}`))
-}) 
+    .catch((err) =>
+      console.log(`an error occurred while showing a spot ${err}`)
+    );
+});
 
-//show page to edit or delete a spot
-router.get('/user-profile/my-spots/:spotId/edit', (req,res)=> {
-  if(req.session.currentUser) {
-    const {spotId} = req.params
-    Spot.findById(spotId)
-    .then(spotToEdit => {
-        res.render("user/edit-spot", spotToEdit);
+//.Show EDIT or DELETE a spot
+router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
+  const { spotId } = req.params;
+  Spot.findById(spotId)
+    .then((spotToEdit) => {
+      console.log(spotToEdit);
+      res.render("user/edit-spot", spotToEdit);
     })
-    .catch(err => console.log(`error while displaying spot edit page ${err}`))
-  } else{
-    res.redirect("/login")
-  }
-})
+    .catch((err) =>
+      console.log(`error while displaying spot edit page ${err}`)
+    );
+});
 
-//editing a spot
-router.post('/user-profile/my-spots/:spotId/edit', (req,res) => {
-  if(req.session.currentUser) {
-    const {spotId} = req.params;
-    const {name, description, location, category} = req.body;
-    Spot.findByIdAndUpdate (
-        spotId,
-        {name, description, location, category},
-        {new:true}
-    )
-    .then(() => res.redirect('/user-profile/my-spots/'))
-    .catch((err) => console.log(`error while editing a spot ${err}`))
-  } else {
-    res.redirect("/login")
-  }
-})
+//.EDIT a spot
+router.post("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
+  const { spotId } = req.params;
+  const { name, description, location, category } = req.body;
+  Spot.findByIdAndUpdate(
+    spotId,
+    { name, description, location, category },
+    { new: true }
+  )
+    .then(() => res.redirect("/user-profile/user-spots/"))
+    .catch((err) => console.log(`error while editing a spot ${err}`));
+});
 
-//deleting a spot
-router.post('/user-profile/my-spots/:spotId/edit/delete', (req,res) => {
-  if(req.session.currentUser) {
-    const {spotId} = req.params
+//.DELETE a spot
+router.post(
+  "/user-spots/:spotId/edit/delete",
+  isLoggedMiddleware,
+  (req, res) => {
+    const { spotId } = req.params;
     Spot.findByIdAndDelete(spotId)
-    .then(() => res.redirect('/user-profile/my-spots'))
-    .catch(err => console.log(`error while deleting a spot ${err}`))
-  }else {
-    res.redirect("/login")
+      .then(() => res.redirect("/user-profile/user-spots"))
+      .catch((err) => console.log(`error while deleting a spot ${err}`));
   }
-})
+);
 
-//show page to edit profile
-router.get('/user-profile/edit-profile', (req,res)=> {
-  if(req.session.currentUser) {
-    const {userId} = req.params
-    User.findById(userId)
-    .then(userToEdit => {
-        res.render("user/edit-profile", userToEdit);
+//.Show EDIT PROFILE
+router.get("/edit-profile", isLoggedMiddleware, (req, res) => {
+  const userId = req.session.currentUser._id;
+  User.findById(userId)
+    .then((userToEdit) => {
+      res.render("user/edit-profile", { user: userToEdit });
     })
-    .catch(err => console.log(`error while displaying edit profile page ${err}`))
-  } else{
-    res.redirect("/login")
-  }
-})
+    .catch((err) =>
+      console.log(`error while displaying edit profile page ${err}`)
+    );
+});
 
-//editing user's profile
-router.post('/user-profile/edit-profile', (req,res) => {
-  if(req.session.currentUser) {
-    const {userId} = req.params;
-    const {username, email, password} = req.body;
-    User.findByIdAndUpdate (
-        userId,
-        {username, email, password},
-        {new:true}
-    )
-    .then(() => res.redirect('/user-profile/'))
-    .catch((err) => console.log(`error while editing user's profile ${err}`))
-  } else {
-    res.redirect("/login")
-  }
-})
+//.EDIT user's profile
+router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
+  const userId = req.session.currentUser._id;
+  const { username, email } = req.body;
+  console.log("body post", JSON.stringify(req.body, null, 4));
+  console.log("session", req.session.currentUser._id);
 
-//deleting user's profile
-router.post('/user-profile/:userID/edit-profile/delete', (req,res) => {
-  if(req.session.currentUser) {
-    const {userId} = req.params
-    User.findByIdAndDelete(userId)
-    .then(() => res.redirect('/signup'))
-    .catch(err => console.log(`error while deleting user ${err}`))
-  }else {
-    res.redirect("/login")
-  }
-})
+  //validation for empty fields:
+  //.1
+  // if (!username || !email) {
+  //   res.render("/edit-profile", {
+  //     errorMessage:
+  //       "All fields are mandatory. Please provide your username, email and password.",
+  //   });
+  // }
+
+  //.2
+  const data2 = Object.entries(req.body)
+    .filter((element) => element[1])
+    .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
+
+  //.3
+  // const data = {};
+  // if (username) {
+  //   data.username = username;
+  // }
+  // if (email) {
+  //   data.email = email;
+  // }
+
+  User.findByIdAndUpdate(userId, data2, { new: true })
+    .then((response) => {
+      req.session.currentUser = response;
+      res.redirect("/user-profile");
+    })
+    .catch((err) => console.log(`error while editing user's profile ${err}`));
+});
+
+//.DELETE user's profile
+
+router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
+  const { userId } = req.params;
+  User.findByIdAndDelete(userId)
+    .then(() => res.redirect("/signup"))
+    .catch((err) => console.log(`error while deleting user ${err}`));
+});
 
 module.exports = router;

@@ -1,25 +1,28 @@
-{{!-- {{#if user}} --}}
-
 <h2>Edit here the details of {{name}}</h2>
-<form action="/user-profile/my-spots/{{_id}}/edit" method="post">
+<form action="/user-profile/user-spots/{{_id}}/edit" method="post">
 
   <label for="name-input">Name:</label>
-  <input type="text" name="name" id="name-input" value="{{name}}"/>
+  <input type="text" name="name" id="name-input" value="{{name}}" />
 
   <label for="description-input">Description:</label>
-  <input type="text" name="description" id="description-input" value="{{description}}"/>
+  <textarea type="text" name="description" id="description-input" value="{{description}}"></textarea>
+  {{!-- <textarea name="description" id="description-input" cols="30" rows="5" value="{{description}}"></textarea> --}}
 
   <label for="location">Location:</label>
-  <input type="text" name="location" id="location-input" value="{{location}}"/>
+  <input type="text" name="location" id="location-input" value="{{location}}" />
 
   <label for="category-input">Category:</label>
   <select id="category-input" name="category" value="{{category}}">
-    <option value="To eat">To eat</option>
-    <option value="To walk">To walk</option>
-    <option value="To bike">To bike</option>
-    <option value="To hike">To hike</option>
-    <option value="To visit">To visit</option>
+    <option value="To visit">Beach</option>
+    <option value="For sunset">For sunrise</option>
     <option value="For sunset">For sunset</option>
+    <option value="To bike">To bike</option>
+    <option value="To eat">To eat</option>
+    <option value="To hike">To hike</option>
+    <option value="To hike">To relax</option>
+    <option value="To walk">To walk</option>
+    <option value="To visit">To visit</option>
+
   </select>
 
   <button type="submit">Update</button>
@@ -27,10 +30,6 @@
 </form>
 
 {{!-- to delete --}}
-<form action="/user-profile/my-spots/{{_id}}/edit/delete" method="post">
+<form action="/user-profile/user-spots/{{_id}}/edit/delete" method="post">
   <button type="submit">Delete</button>
-</form> 
-
-{{!-- {{else}}
-<p>Still no logged in user, sorry!</p>
-{{/if}} --}}
+</form>

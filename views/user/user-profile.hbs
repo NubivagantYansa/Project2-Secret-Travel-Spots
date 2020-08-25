@@ -4,15 +4,17 @@
 <button>
   <a href="/user-profile">Reload the page</a>
 </button>
-<a href="/user-profile/create-spot">New Spot</a>
-<a href="/user-profile/my-spots">My Spots</a>
-<a href="">Favourites</a>
-<a href="/user-profile/edit-profile">Edite profile</a>
+
+<span><a href="/user-profile/create-spot" class="btn btn-primary">New Spot</a></span>
+<span><a href="/user-profile/user-spots" class="btn btn-primary">My Spots</a></span>
+<span><a href="" class="btn btn-primary">Favourites</a></span>
+
+<a href="/user-profile/edit-profile" class="btn btn-primary">Edit profile</a>
 <form action="/user-profile/{{user._id}}/edit-profile/delete" method="post">
   <button type="submit">Delete profile</button>
-</form> 
-
+</form>
 
 {{else}}
 <p>Still no logged in user, sorry!</p>
+<a href="/">Login</a>
 {{/if}}

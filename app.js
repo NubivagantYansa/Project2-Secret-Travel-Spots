@@ -40,6 +40,6 @@ app.locals.title = "Secret Travel Spots";
 // Routes
 app.use("/", require("./routes/index.routes"));
 app.use("/", require("./routes/auth.routes"));
-app.use("/", require("./routes/user.routes"));
+app.use("/user-profile", require("./routes/user.routes"));
 
 module.exports = app;
