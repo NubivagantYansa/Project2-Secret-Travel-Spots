@@ -11,7 +11,7 @@
 
 <a href="/user-profile/edit-profile" class="btn btn-primary">Edit profile</a>
 <form action="/user-profile/{{user._id}}/edit-profile/delete" method="post">
-  <button type="submit">Delete profile</button>
+  <button onclick="confirmation()" id="delete-profile" type="submit">Delete profile</button>
 </form>
 
 {{else}}

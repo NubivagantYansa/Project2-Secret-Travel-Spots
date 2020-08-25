@@ -160,9 +160,18 @@ router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
 //.DELETE user's profile
 router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
+
   User.findByIdAndDelete(userId)
-    .then(() => res.redirect("/signup"))
+    .then((response) => {
+      // alert(response.data);
+      req.session.destroy();
+      res.redirect("/signup");
+    })
     .catch((err) => console.log(`error while deleting user ${err}`));
+  // const toDelete = confirm("Are you sure you want to delete?");
+  // if (toDelete) {
+
+  // }
 });
 
 module.exports = router;
