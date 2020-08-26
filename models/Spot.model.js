@@ -32,7 +32,7 @@ const spotSchema = new Schema(
       ],
       required: [true, "Category is required, and you must choose of these"],
     },
-    comments: { type: Schema.Types.ObjectId, ref: "Comment" },
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   {
     timestamps: true,

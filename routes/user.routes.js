@@ -5,6 +5,7 @@ const router = express.Router();
 // const saltRounds = 10;
 const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
+// const Favourite = require("../models/Favourite.model");
 // const Comment = require('../models/Comment.model')
 // const mongoose = require('mongoose');
 
@@ -47,14 +48,6 @@ router.post("/create-spot", isLoggedMiddleware, (req, res) => {
     .then(res.redirect("/user-profile"))
     .catch((err) => console.log(`error while creating a new spot ${err}`));
 });
-
-// function getAllSpots(req,res) {
-//   Spot.find().populate("author").then(spots=> {
-//     res.render("a beautiful view", spots)
-//   }).catch(console.error)
-// }
-
-// router.get("/explore", getAllSpots)
 
 //.Show a SINGLE SPOT from user spots
 router.get("/user-spots/:spotId", (req, res, next) => {
@@ -122,12 +115,11 @@ router.get("/edit-profile", isLoggedMiddleware, (req, res) => {
 //.EDIT user's profile
 router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
-  // const { username, email } = req.body;
   // console.log("body post", JSON.stringify(req.body, null, 4));
   // console.log("session", req.session.currentUser._id);
 
   //validation for empty fields:
-  //.1
+  //.1 No empty fields allowed
   // if (!username || !email) {
   //   res.render("/edit-profile", {
   //     errorMessage:
@@ -135,12 +127,7 @@ router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
   //   });
   // }
 
-  //.2
-  const data2 = Object.entries(req.body)
-    .filter((element) => element[1])
-    .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
-
-  //.3
+  //.2 Do not update empty blanks (easy)
   // const data = {};
   // if (username) {
   //   data.username = username;
@@ -148,6 +135,11 @@ router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
   // if (email) {
   //   data.email = email;
   // }
+
+  //.3 Do not update empty blanks (hard-core)
+  const data2 = Object.entries(req.body)
+    .filter((element) => element[1])
+    .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
 
   User.findByIdAndUpdate(userId, data2, { new: true })
     .then((response) => {
@@ -173,5 +165,18 @@ router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
 
   // }
 });
+
+// function getAllSpots(req, res) {
+//   Spot.find()
+//     .populate("author")
+//     .then((spots) => {
+//       res.render("spot-details", spots);
+//     })
+//     .catch((err) =>
+//       console.log(`error while getting the spot details page ${err}`)
+//     );
+// }
+
+// router.get("/explore", getAllSpots);
 
 module.exports = router;

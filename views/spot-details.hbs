@@ -1,0 +1,40 @@
+<div>
+  <h2>Spot Details</h2>
+  <div>
+    <div class="card card-body">
+
+      <h4>name: {{name}}</h4>
+      <p>location: {{location}}</p>
+      <p>category: {{category}}</p>
+      <p>description: {{description}}</p>
+
+      {{!-- see comments --}}
+      {{#each comments}}
+      <p>author: {{author.username}}</p>
+      <p>content: {{content}}</p>
+      {{/each}}
+
+      {{!-- add favourites --}}
+      <h3>Add to your favourites</h3>
+      <form action="/spot-details/{{_id}}/fav" method="post">
+        <button type="submit" class="btn btn-danger">Like</button>
+      </form>
+
+
+      {{!-- add comment form --}}
+      <h3>Add comment</h3>
+      <form action="/spot-details/{{_id}}/comment" method="POST">
+        <label for="comment-author-username">Your username:</label>
+        <input type="text" name="author" id="comment-author-username" />
+        <input type="text" name="postAuthor" id="post-author" value="{{author.username}}" hidden />
+        <textarea name="content" id="comment-content-input" cols="30" rows="2"></textarea>
+        <button type="submit">Comment</button>
+      </form>
+      {{!-- <p><a href="/user-profile/user-spots/{{this.id}}" class="btn btn-primary">Back</a> ||<a --}}
+      {{!-- href="/user-profile/user-spots/{{this.id}}/edit" class="btn btn-primary">Edit</a></p> --}}
+      {{!-- {{/each}} --}}
+
+    </div>
+    <hr>
+  </div>
+</div>
