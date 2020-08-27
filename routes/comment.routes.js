@@ -4,7 +4,6 @@ const Spot = require("../models/Spot.model");
 const User = require("../models/User.model");
 const Comment = require("../models/Comment.model");
 
-
 router.post("/spot-details/:spotId/comment", (req, res) => {
   const { spotId } = req.params;
   const { content } = req.body;
@@ -15,7 +14,7 @@ router.post("/spot-details/:spotId/comment", (req, res) => {
   User.findOne({ username: req.session.currentUser._id })
     .then((userDocFromDB) => {
       user = userDocFromDB;
-      // 1. if commenter is not user yet, let's register him/her as a user
+      // if commenter is not user yet, redirect to login
       // if (!userDocFromDB) {
       //   return res.redirect("/");
       // }
@@ -40,13 +39,15 @@ router.post("/spot-details/:spotId/comment", (req, res) => {
             .save()       // 5. if everything is ok, we redirect to the same page to see the comment
             .then(updatedSpot => {
               console.log('this is what i get after saving comment', updatedSpot)
-              res.redirect(`/spot-details/${updatedSpot._id}`)})
-            .catch((err) => console.log(`Error after creating the comment: ${err}`));
+              return res.redirect(`/spot-details/${updatedSpot._id}`)})
+            // .catch((err) => console.log(`Error after creating the comment: ${err}`));
         });
       });
     })
+    .catch((err) => console.log(`Error after creating the comment: ${err}`));
 });
-
+//if I use the if statement, it shows this error. otherwise it works (I cannot comment)
+//what if we dom manipulation to show the comment section only if you're logged in? You can't comment any if you're not
 // Error after creating the comment: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 
 module.exports = router;
