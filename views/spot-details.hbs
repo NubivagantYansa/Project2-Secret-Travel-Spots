@@ -10,8 +10,8 @@
 
       {{!-- see comments --}}
       {{#each comments}}
-      <p>author: {{author.username}}</p>
-      <p>content: {{content}}</p>
+      <p>author: {{this.author.username}}</p>
+      <p>content: {{this.content}}</p>
       {{/each}}
 
       {{!-- add favourites --}}
@@ -24,9 +24,6 @@
       {{!-- add comment form --}}
       <h3>Add comment</h3>
       <form action="/spot-details/{{_id}}/comment" method="POST">
-        <label for="comment-author-username">Your username:</label>
-        <input type="text" name="author" id="comment-author-username" />
-        <input type="text" name="postAuthor" id="post-author" value="{{author.username}}" hidden />
         <textarea name="content" id="comment-content-input" cols="30" rows="2"></textarea>
         <button type="submit">Comment</button>
       </form>

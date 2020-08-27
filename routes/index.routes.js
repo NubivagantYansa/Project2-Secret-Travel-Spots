@@ -20,6 +20,13 @@ const getOneSpot = (req, res) => {
   const { spotId } = req.params;
   Spot.findById(spotId)
     .populate("comments author")
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'author',
+        model: 'User'
+      }
+    })
     .then((singleSpot) => {
       console.log(`one spot is showing ${singleSpot}`);
       res.render("spot-details", singleSpot);
