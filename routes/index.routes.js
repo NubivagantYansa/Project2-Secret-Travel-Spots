@@ -3,9 +3,8 @@ const router = express.Router();
 const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
 const { create } = require("../models/User.model");
-// const Favourite = require("../models/Favourite.model");
 
-// .Middleware to render all spots
+// .Controller to render all spots
 const getAllSpots = (req, res) => {
   Spot.find()
     .populate("author")
@@ -42,15 +41,14 @@ const getOneSpot = (req, res) => {
 /* GET home page */
 router.get("/", (req, res, next) => res.render("index"));
 
+/* GET the about page */
+
+router.get("/about", (req, res, next) => res.render("about"));
+
 /* GET Explore page */
 router.get("/explore", getAllSpots);
-// (req, res) => {
-//receive spots by date, newest first - NOT WORKING
-//Spot.find().sort({ _id: -1 }).limit(10);
-//we can sort createAT
-//});
 
-//.Show spot details page
+/* GET spot details page */
 router.get("/spot-details/:spotId", getOneSpot);
 
 module.exports = router;

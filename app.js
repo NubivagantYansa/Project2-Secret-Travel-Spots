@@ -42,6 +42,5 @@ app.use("/", require("./routes/index.routes"));
 app.use("/", require("./routes/auth.routes"));
 app.use("/user-profile", require("./routes/user.routes"));
 app.use("/", require("./routes/comment.routes"));
-app.use("/", require("./routes/fav.routes"));
 
 module.exports = app;

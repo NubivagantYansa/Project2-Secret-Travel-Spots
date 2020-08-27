@@ -5,6 +5,18 @@ const { isLoggedMiddleware } = require("../middlewares/middlewares");
 const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
 
+//. Controller to render all spots
+const getAllSpots = (req, res) => {
+  Spot.find()
+    .populate("author")
+    .sort({ createdAt: -1 })
+    .limit(10)
+    .then((spots) => {
+      res.render("explore", { spots: spots });
+    })
+    .catch((err) => console.log(`error while getting the spots page ${err}`));
+};
+
 // .Controller to render one spot
 const getOneSpot = (req, res) => {
   console.log(req.params);
@@ -161,10 +173,49 @@ router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
       res.redirect("/signup");
     })
     .catch((err) => console.log(`error while deleting user ${err}`));
-  // const toDelete = confirm("Are you sure you want to delete?");
-  // if (toDelete) {
+});
 
-  // }
+//.Get all fav spots
+
+router.get("/user-favourites", isLoggedMiddleware, (req, res, next) => {
+  User.findById(req.session.currentUser._id)
+    // ({author: req.session.currentUser._id})
+    .populate("favSpots")
+    // .populate({
+    //   path: "favSpots",
+    //   populate: {
+    //     path: "author",
+    //     model: "Spot",
+    //   },
+    // })
+    .then((spotsFromDb) => {
+      console.log(`spots ${JSON.stringify(spotsFromDb, null, 4)} here`);
+      res.render("user/favourite-spots", { spots: spotsFromDb });
+    })
+    .catch((err) =>
+      console.log(`something happened while getting movies ${err}`)
+    );
+});
+
+//.Get favourite page - details
+router.get("/user-favourites/:spotId", isLoggedMiddleware, getOneSpot);
+
+//.Post new favourite
+router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
+  console.log("this is params", req.params);
+
+  const { spotId } = req.params;
+  User.findByIdAndUpdate(
+    req.session.currentUser._id,
+    { $addToSet: { favSpots: spotId } },
+    { new: true }
+  )
+    .then((newUser) => {
+      req.session.currentUser = newUser;
+      res.redirect("/explore");
+    })
+
+    .catch((err) => console.log(`Error after creating the favourite: ${err}`));
 });
 
 // function getAllSpots(req, res) {
