@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { isLoggedMiddleware } = require("../middlewares/middlewares");
 
 // const bcryptjs = require('bcryptjs');
 // const saltRounds = 10;
@@ -10,12 +11,12 @@ const Spot = require("../models/Spot.model");
 // const mongoose = require('mongoose');
 
 //Middleware to check if user is logged in
-const isLoggedMiddleware = (req, res, next) => {
-  if (!req.session.currentUser) {
-    return res.redirect("/login");
-  }
-  next();
-};
+// const isLoggedMiddleware = (req, res, next) => {
+//   if (!req.session.currentUser) {
+//     return res.redirect("/login");
+//   }
+//   next();
+// };
 
 //.SHOW ALL user's spots
 router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {

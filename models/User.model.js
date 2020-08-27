@@ -21,7 +21,8 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required."],
     },
-    spots: [{ type: Schema.Types.ObjectId, ref: 'Spot' }]
+    spots: [{ type: Schema.Types.ObjectId, ref: "Spot" }],
+    favSpots: [{ type: Schema.Types.ObjectId, ref: "Spot" }],
   },
   {
     timestamps: true,
