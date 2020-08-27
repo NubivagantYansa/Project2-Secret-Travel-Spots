@@ -2,19 +2,22 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
+const { create } = require("../models/User.model");
 // const Favourite = require("../models/Favourite.model");
 
 // .Middleware to render all spots
 const getAllSpots = (req, res) => {
   Spot.find()
     .populate("author")
+    .sort({'createdAt': -1})
+    .limit(10)
     .then((spots) => {
       res.render("explore", { spots: spots });
     })
     .catch((err) => console.log(`error while getting the spots page ${err}`));
 };
 
-// .Middleware to render all spots
+// .Middleware to render one spot
 const getOneSpot = (req, res) => {
   console.log(req.params);
   const { spotId } = req.params;
