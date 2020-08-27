@@ -10,9 +10,13 @@
 
       {{!-- see comments --}}
       {{#each comments}}
-      <p>author: {{this.author.username}}</p>
-      <p>content: {{this.content}}</p>
+      <div class="card card-body">
+        <p>author: {{this.author.username}}</p>
+        <p>content: {{this.content}}</p>
+      </div>
+      <hr>
       {{/each}}
+
 
       {{!-- add favourites --}}
       <h3>Add to your favourites</h3>
@@ -29,7 +33,7 @@
       </form>
       {{!-- <p><a href="/user-profile/user-spots/{{this.id}}" class="btn btn-primary">Back</a> ||<a --}}
       {{!-- href="/user-profile/user-spots/{{this.id}}/edit" class="btn btn-primary">Edit</a></p> --}}
-      {{!-- {{/each}} --}}
+
 
     </div>
     <hr>

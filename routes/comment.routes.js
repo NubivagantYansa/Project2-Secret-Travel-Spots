@@ -4,7 +4,17 @@ const Spot = require("../models/Spot.model");
 const User = require("../models/User.model");
 const Comment = require("../models/Comment.model");
 
-router.post("/spot-details/:spotId/comment", (req, res) => {
+//Middleware to check if user is logged in
+const isLoggedMiddleware = (req, res, next) => {
+  if (!req.session.currentUser) {
+    return res.redirect("/login");
+  }
+  next();
+};
+
+// ==========================================================================
+
+router.post("/spot-details/:spotId/comment", isLoggedMiddleware, (req, res) => {
   const { spotId } = req.params;
   const { content } = req.body;
   console.log(req.body);
@@ -15,9 +25,10 @@ router.post("/spot-details/:spotId/comment", (req, res) => {
     .then((userDocFromDB) => {
       user = userDocFromDB;
       // if commenter is not user yet, redirect to login
-      // if (!userDocFromDB) {
-      //   return res.redirect("/");
-      // }
+      if (!userDocFromDB) {
+        res.redirect("/");
+      }
+      return;
     })
     .then(() => {
       // prettier-ignore
@@ -40,7 +51,7 @@ router.post("/spot-details/:spotId/comment", (req, res) => {
             .then(updatedSpot => {
               console.log('this is what i get after saving comment', updatedSpot)
               return res.redirect(`/spot-details/${updatedSpot._id}`)})
-            // .catch((err) => console.log(`Error after creating the comment: ${err}`));
+            .catch((err) => console.log(`Error after creating the comment: ${err}`));
         });
       });
     })
