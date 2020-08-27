@@ -14,12 +14,13 @@
       <p>content: {{this.content}}</p>
       {{/each}}
 
+      {{!-- {{#if user}} --}}
+      
       {{!-- add favourites --}}
       <h3>Add to your favourites</h3>
       <form action="/spot-details/{{_id}}/fav" method="post">
         <button type="submit" class="btn btn-danger">Like</button>
       </form>
-
 
       {{!-- add comment form --}}
       <h3>Add comment</h3>
@@ -27,6 +28,9 @@
         <textarea name="content" id="comment-content-input" cols="30" rows="2"></textarea>
         <button type="submit">Comment</button>
       </form>
+
+      {{!-- {{/if}} --}}
+
       {{!-- <p><a href="/user-profile/user-spots/{{this.id}}" class="btn btn-primary">Back</a> ||<a --}}
       {{!-- href="/user-profile/user-spots/{{this.id}}/edit" class="btn btn-primary">Edit</a></p> --}}
       {{!-- {{/each}} --}}
