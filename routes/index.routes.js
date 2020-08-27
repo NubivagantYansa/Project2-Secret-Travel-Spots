@@ -9,7 +9,7 @@ const { create } = require("../models/User.model");
 const getAllSpots = (req, res) => {
   Spot.find()
     .populate("author")
-    .sort({'createdAt': -1})
+    .sort({ createdAt: -1 })
     .limit(10)
     .then((spots) => {
       res.render("explore", { spots: spots });
@@ -24,11 +24,11 @@ const getOneSpot = (req, res) => {
   Spot.findById(spotId)
     .populate("comments author")
     .populate({
-      path: 'comments',
+      path: "comments",
       populate: {
-        path: 'author',
-        model: 'User'
-      }
+        path: "author",
+        model: "User",
+      },
     })
     .then((singleSpot) => {
       console.log(`one spot is showing ${singleSpot}`);
