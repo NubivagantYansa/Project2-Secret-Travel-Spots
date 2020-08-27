@@ -9,6 +9,7 @@ const Spot = require("../models/Spot.model");
 // const Comment = require('../models/Comment.model')
 // const mongoose = require('mongoose');
 
+//Middleware to check if user is logged in
 const isLoggedMiddleware = (req, res, next) => {
   if (!req.session.currentUser) {
     return res.redirect("/login");

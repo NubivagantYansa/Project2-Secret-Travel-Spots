@@ -28,7 +28,6 @@ router.post("/spot-details/:spotId/comment", isLoggedMiddleware, (req, res) => {
       if (!userDocFromDB) {
         res.redirect("/");
       }
-      return;
     })
     .then(() => {
       // prettier-ignore
