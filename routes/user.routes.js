@@ -2,21 +2,30 @@ const express = require("express");
 const router = express.Router();
 const { isLoggedMiddleware } = require("../middlewares/middlewares");
 
-// const bcryptjs = require('bcryptjs');
-// const saltRounds = 10;
 const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
-// const Favourite = require("../models/Favourite.model");
-// const Comment = require('../models/Comment.model')
-// const mongoose = require('mongoose');
 
-//Middleware to check if user is logged in
-// const isLoggedMiddleware = (req, res, next) => {
-//   if (!req.session.currentUser) {
-//     return res.redirect("/login");
-//   }
-//   next();
-// };
+// .Controller to render one spot
+const getOneSpot = (req, res) => {
+  console.log(req.params);
+  const { spotId } = req.params;
+  Spot.findById(spotId)
+    .populate("comments author")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "author",
+        model: "User",
+      },
+    })
+    .then((singleSpot) => {
+      console.log(`one spot is showing ${singleSpot}`);
+      res.render("spot-details", singleSpot);
+    })
+    .catch((err) =>
+      console.log(`an error occurred while showing a spot ${err}`)
+    );
+};
 
 //.SHOW ALL user's spots
 router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
@@ -52,17 +61,7 @@ router.post("/create-spot", isLoggedMiddleware, (req, res) => {
 });
 
 //.Show a SINGLE SPOT from user spots
-router.get("/user-spots/:spotId", (req, res, next) => {
-  const { spotId } = req.params;
-  Spot.findById(spotId)
-    .then((singleSpot) => {
-      console.log(`one spot is showing ${singleSpot}`);
-      res.render("spot-details", singleSpot);
-    })
-    .catch((err) =>
-      console.log(`an error occurred while showing a spot ${err}`)
-    );
-});
+router.get("/user-spots/:spotId", getOneSpot);
 
 //.Show EDIT or DELETE a spot
 router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {

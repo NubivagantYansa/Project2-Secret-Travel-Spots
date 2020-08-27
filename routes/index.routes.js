@@ -17,7 +17,7 @@ const getAllSpots = (req, res) => {
     .catch((err) => console.log(`error while getting the spots page ${err}`));
 };
 
-// .Middleware to render one spot
+// .Controller to render one spot
 const getOneSpot = (req, res) => {
   console.log(req.params);
   const { spotId } = req.params;
