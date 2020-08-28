@@ -4,6 +4,7 @@ const { isLoggedMiddleware } = require("../middlewares/middlewares");
 
 const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
+const Comment = require("../models/Comment.model");
 
 //. Controller to render all spots
 const getAllSpots = (req, res) => {
@@ -68,7 +69,17 @@ router.post("/create-spot", isLoggedMiddleware, (req, res) => {
     category,
     author: req.session.currentUser._id,
   })
-    .then(res.redirect("/user-profile"))
+    .then((newSpot) => {
+      console.log(newSpot);
+      User.findByIdAndUpdate(
+        req.session.currentUser._id,
+        { $addToSet: { spots: newSpot._id } },
+        { new: true }
+      ).then((updatedUser) => {
+        console.log(updatedUser);
+        res.redirect("/user-profile");
+      });
+    })
     .catch((err) => console.log(`error while creating a new spot ${err}`));
 });
 
@@ -198,7 +209,7 @@ router.get("/user-favourites", isLoggedMiddleware, (req, res, next) => {
 });
 
 //.Get favourite page - details
-router.get("/user-favourites/:spotId", isLoggedMiddleware, getOneSpot);
+router.get("/user-favourites/:spotId", isLoggedMiddleware, getAllSpots);
 
 //.Post new favourite
 router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
@@ -211,6 +222,7 @@ router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
     { new: true }
   )
     .then((newUser) => {
+      console.log(newUser);
       req.session.currentUser = newUser;
       res.redirect("/explore");
     })
