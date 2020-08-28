@@ -2,15 +2,17 @@
 <section id='main-container'>
   <h2>Welcome, {{ user.username }}!</h2>
   <p>This is your profile page my friend!</p>
-  <button>
-    <a href="/user-profile">Reload the page</a>
-  </button>
+
+
+  <span><a href="/user-profile" class="btn btn-primary">Reload the page</a></span>
 
   <span><a href="/user-profile/create-spot" class="btn btn-primary">New Spot</a></span>
 
   <span><a href="/user-profile/user-spots" class="btn btn-primary">My Spots</a></span>
 
   <span><a href="/user-profile/user-favourites" class="btn btn-primary">Favourites</a></span>
+
+  <span><a href="/user-profile/edit-profile" class="btn btn-primary">Edit Profile</a></span>
 
   <span><button class="btn btn-danger" id='delete-profile'>Delete my Profile</button>
   </span>

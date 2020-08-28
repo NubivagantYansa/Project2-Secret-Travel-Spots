@@ -1,13 +1,16 @@
-<div id="form">
-  <h2>Login</h2>
-  <form action="/login" method="POST">
-    <label for="input-email">Email</label>
-    <input type="email" id="input-email" name="email" placeholder="Your email" />
+<div class="text-center position-relative  p-3 p-md-5 m-md-3 text-center bg-light" id=" form">
 
-    <label for="input-password">Password</label>
-    <input type="password" name="password" id="input-password" placeholder="********" />
+  <h1 class="mx-auto">Please Login</h1>
 
-    <button type="submit">Login</button>
+  <form class="form-signin mx-auto" style="width: 300px;" action="/login" method="POST">
+
+    <label for="input-email" class="sr-only">Email</label>
+    <input type="email" id="input-email" name="email" placeholder="Email address" class="form-control" />
+
+    <label for="input-password" class="sr-only">Password</label>
+    <input type="password" name="password" id="input-password" placeholder="********" class="form-control" />
+
+    <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
 
     {{#if errorMessage}}
     <p class="error">{{errorMessage}}</p>

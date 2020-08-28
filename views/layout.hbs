@@ -8,29 +8,43 @@
   <title>The Secret Spot</title>
   <!--Bootstrap css cdn-->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
-  <!--Your css links-->
+  <!--css links-->
   <link rel="stylesheet" href="/stylesheets/style.css" />
 </head>
 
-<body>
-  <nav>
-    <ul>
-      <li id="to-left">
-        <p><a href="/explore"> Explore </a></p>
-        <p><a href="/about"> About</a></p>
-      </li>
-      <li id="to-right">
-        <a href="/signup">Signup</a> <span> | </span>
-        <a href="/login">Login</a> <span> | </span>
-        <a href="/user-profile">Profile</a> <span> | </span>
-        <form id="logout-form" action="/logout" method="POST">
-          <button>Logout</button>
-        </form>
-      </li>
-    </ul>
-  </nav>
+<body class="text-center p-3 p-md-5 m-md-3 text-center bg-light">
 
-  <div class="container">
+  <!--Nav Bar-->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">Logo</a>
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse show" id="navbarsExampleDefault" style="">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/explore">Explore <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/signup">Signup <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/user-profile">Profile <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <form id="logout-form" action="/logout" method="POST">
+        <button class="btn btn-outline-success my-2 my-sm-0">Logout</button>
+      </form>
+    </div>
+  </nav>
+  <div class="text-center jumbotron ">
     {{{body}}}
   </div>
 

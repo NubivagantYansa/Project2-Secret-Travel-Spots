@@ -19,16 +19,6 @@ router.post("/spot-details/:spotId/comment", isLoggedMiddleware, (req, res) => {
   const { content } = req.body;
   console.log(req.body);
 
-  // .then((userDocFromDB) => {
-  //   user = userDocFromDB;
-  // if commenter is not user yet, redirect to login
-  //   if (!userDocFromDB) {
-  //     res.redirect("/");
-  //   }
-  // })
-
-  // prettier-ignore
-
   let newComment;
   newComment = new Comment({ author: req.session.currentUser._id, content });
 
