@@ -7,6 +7,13 @@
       <label for="">This is the search form</label>
     </form>
 
+    <div class="">
+      <label for="character-id">Filter Spots:</label>
+      <input type="text" name="Spot-category" id="fetch-by-category-input" />
+      <button id="fetch-by-cat">Filter</button>
+    </div>
+
+
     {{#each spots}}
     <div class="card card-body">
       <h4>name: {{this.name}}</h4>

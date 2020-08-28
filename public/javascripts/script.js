@@ -21,3 +21,30 @@ document.getElementById("delete-profile").addEventListener("click", (event) => {
     </div>`;
   document.getElementById("main-container").innerHTML = str;
 });
+
+// const filterById = (id) => {
+//   axios
+//     .get(`http://localhost:3000/explore`, {
+//       params: { id: id },
+//     })
+//     .then((response) => {
+//       const obj = response.data;
+//       console.log(`this is the html ${JSON.parse(obj)}`);
+//       console.log("this is the input from view", response.config.params.id);
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       err.response.status === 404
+//         ? alert(`The id doesn't exist.`)
+//         : alert("Server error! Sorry.");
+//     });
+// };
+
+document
+  .getElementById("fetch-by-cat")
+  .addEventListener("click", function (event) {
+    event.preventDefault();
+    // console.log("hello world!");
+    const category = document.getElementById("fetch-by-category-input").value; // input id of item to be retrived
+    filterById(category);
+  });
