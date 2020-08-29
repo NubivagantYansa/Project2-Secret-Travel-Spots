@@ -112,11 +112,12 @@ router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
 router.post("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
   const { spotId } = req.params;
   const { name, description, location, category } = req.body;
-  Spot.findByIdAndUpdate(
-    spotId,
-    { name, description, location, category },
-    { new: true }
-  )
+  //. Do not update empty blanks (hard-core)
+  const data = Object.entries(req.body)
+    .filter((element) => element[1])
+    .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
+
+  Spot.findByIdAndUpdate(spotId, data, { new: true })
     .then(() => res.redirect("/user-profile/user-spots/"))
     .catch((err) => console.log(`error while editing a spot ${err}`));
 });

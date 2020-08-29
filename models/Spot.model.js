@@ -30,7 +30,10 @@ const spotSchema = new Schema(
         "For sunset",
         "For sunrise",
       ],
-      required: [true, "Category is required, and you must choose of these"],
+      required: [
+        true,
+        "Category is required, you must choose of the listed items",
+      ],
     },
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     imageUrl: {
