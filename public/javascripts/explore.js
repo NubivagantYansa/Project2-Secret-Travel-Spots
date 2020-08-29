@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterById = (id) => {
     console.log("I AM BEING CLICKED");
     axios
-      .get(`http://localhost:3000/explore/test`)
+      .get(`${window.location.origin}/explore/test`)
       .then((response) => {
         const obj = response.data;
         console.log("json", obj);
