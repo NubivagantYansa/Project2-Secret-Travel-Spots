@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const filterById = (id) => {
     console.log("I AM BEING CLICKED");
     axios
-      .get(`${window.location.origin}/explore/test`, { params: { id: id } })
+      .get(`${window.location.origin}/explore/search`, { params: { id: id } })
 
       .then((spots) => {
         const obj = spots.data;
@@ -19,11 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 2. deconstruct properties name, location,category
         // 3. show only those with category = spots.config.params.id
 
-        let result = obj.filter((spot) => {
-          const { name, description, location, category, imageUrl } = spot;
-
-          return spot.category == input;
-        });
+        let result = obj.filter((spot) => spot.category == input);
 
         result.forEach((obj) => {
           const { name, description, location, category, imageUrl } = obj;
