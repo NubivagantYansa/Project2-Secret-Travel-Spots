@@ -5,7 +5,7 @@
   <input type="text" name="name" id="name-input" value="{{name}}" />
 
   <label for="description-input">Description:</label>
-  <textarea type="text" name="description" id="description-input" value="{{description}}"></textarea>
+  <input type="text" name="description" id="description-input" value="{{description}}">
   {{!-- <textarea name="description" id="description-input" cols="30" rows="5" value="{{description}}"></textarea> --}}
 
   <label for="location">Location:</label>
@@ -25,15 +25,20 @@
 
   </select>
 
+
   <label for="image-input">Image:</label>
   <input type="file" name="image" id="image-input" class="form-control-file" />
   <input type="text" name="existingImage" hidden id="" value="{{imageUrl}}">
 
   <button type="submit">Update</button>
-
 </form>
+
 
 {{!-- to delete --}}
 <form action="/user-profile/user-spots/{{_id}}/edit/delete" method="post">
   <button type="submit">Delete</button>
 </form>
+
+{{#if errorMessage}}
+<p class="error">{{errorMessage}}</p>
+{{/if}}
