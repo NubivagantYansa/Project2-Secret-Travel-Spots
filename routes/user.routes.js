@@ -138,10 +138,7 @@ router.get("/edit-profile", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
   User.findById(userId)
     .then((userToEdit) => {
-      res.render("user/edit-profile", {
-        user: userToEdit,
-        javascript: "profile",
-      });
+      res.render("user/edit-profile", { user: userToEdit });
     })
     .catch((err) =>
       console.log(`error while displaying edit profile page ${err}`)
