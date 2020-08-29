@@ -11,7 +11,7 @@ const getAllSpots = (req, res) => {
     // .sort({ createdAt: -1 })
     // .limit(10)
     .then((spots) => {
-      res.render("explore", { spots: spots });
+      res.render("explore", { spots: spots, javascript: "explore" });
     })
     .catch((err) => console.log(`error while getting the spots page ${err}`));
 };
@@ -50,5 +50,16 @@ router.get("/explore", getAllSpots);
 
 /* GET spot details page */
 router.get("/spot-details/:spotId", getOneSpot);
+
+router.get("/explore/test", (req, res, next) => {
+  Spot.find()
+    .populate("author")
+    .then((spots) => {
+      res.json(spots);
+    })
+    .catch((err) => console.log(`error while getting the spots page ${err}`));
+});
+
+//res.json
 
 module.exports = router;

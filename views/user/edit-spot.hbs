@@ -1,5 +1,5 @@
 <h2>Edit here the details of {{name}}</h2>
-<form action="/user-profile/user-spots/{{_id}}/edit" method="post">
+<form action="/user-profile/user-spots/{{_id}}/edit" method="post" enctype="multipart/form-data">
 
   <label for="name-input">Name:</label>
   <input type="text" name="name" id="name-input" value="{{name}}" />
@@ -24,6 +24,10 @@
     <option value="To visit">To visit</option>
 
   </select>
+
+  <label for="image-input">Image:</label>
+  <input type="file" name="image" id="image-input" class="form-control-file" />
+  <input type="text" name="existingImage" hidden id="" value="{{imageUrl}}">
 
   <button type="submit">Update</button>
 

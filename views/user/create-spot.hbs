@@ -1,18 +1,18 @@
 {{!-- {{#if user}} --}}
 
 <h2>Add a new spot</h2>
-<form action="/user-profile/create-spot" method="post">
+<form action="/user-profile/create-spot" method="post" enctype="multipart/form-data">
   <div>
     <label for="name-input">Name:</label>
-    <input type="text" name="name" id="name-input" />
+    <input type="text" name="name" id="name-input" class="form-control" />
   </div>
   <div>
     <label for="description-input">Description:</label>
-    <textarea name="description" id="description-input" cols="30" rows="5"></textarea>
+    <textarea name="description" id="description-input" cols="30" rows="5" class="form-control"></textarea>
   </div>
   <div>
     <label for="location-input">Location:</label>
-    <input type="text" name="location" id="location-input" />
+    <input type="text" name="location" id="location-input" class="form-control" />
   </div>
   <div>
     <label for="category-input">Category:</label>
@@ -27,6 +27,10 @@
       <option value="To walk">To walk</option>
       <option value="To visit">To visit</option>
     </select>
+    <div class="form-group">
+      <label for="image-input">Image:</label>
+      <input type="file" name="image" id="image-input" class="form-control-file" />
+    </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>

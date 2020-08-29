@@ -105,7 +105,10 @@ router.post("/logout", (req, res) => {
 router.get("/user-profile", (req, res, next) => {
   // console.log('your sess exp: ', req.session.cookie.expires);
   if (req.session.currentUser) {
-    res.render("user/user-profile", { user: req.session.currentUser });
+    res.render("user/user-profile", {
+      user: req.session.currentUser,
+      javascript: "profile",
+    });
   } else {
     res.redirect("/login");
   }

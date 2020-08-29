@@ -6,6 +6,8 @@ const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
 const Comment = require("../models/Comment.model");
 
+const fileUploader = require("../configs/cloudinary.config");
+
 //. Controller to render all spots
 const getAllSpots = (req, res) => {
   Spot.find()
@@ -60,28 +62,35 @@ router.get("/create-spot", isLoggedMiddleware, (req, res) => {
 });
 
 //.CREATE a new spot
-router.post("/create-spot", isLoggedMiddleware, (req, res) => {
-  const { name, description, location, category } = req.body;
-  Spot.create({
-    name,
-    description,
-    location,
-    category,
-    author: req.session.currentUser._id,
-  })
-    .then((newSpot) => {
-      console.log(newSpot);
-      User.findByIdAndUpdate(
-        req.session.currentUser._id,
-        { $addToSet: { spots: newSpot._id } },
-        { new: true }
-      ).then((updatedUser) => {
-        console.log(updatedUser);
-        res.redirect("/user-profile");
-      });
+router.post(
+  "/create-spot",
+  isLoggedMiddleware,
+  fileUploader.single("image"),
+  (req, res) => {
+    const { name, description, location, category } = req.body;
+    console.log(req.file);
+    Spot.create({
+      name,
+      description,
+      location,
+      category,
+      author: req.session.currentUser._id,
+      imageUrl: req.file.path,
     })
-    .catch((err) => console.log(`error while creating a new spot ${err}`));
-});
+      .then((newSpot) => {
+        console.log(newSpot);
+        User.findByIdAndUpdate(
+          req.session.currentUser._id,
+          { $addToSet: { spots: newSpot._id } },
+          { new: true }
+        ).then((updatedUser) => {
+          console.log(updatedUser);
+          res.redirect("/user-profile");
+        });
+      })
+      .catch((err) => console.log(`error while creating a new spot ${err}`));
+  }
+);
 
 //.Show a SINGLE SPOT from user spots
 router.get("/user-spots/:spotId", getOneSpot);
@@ -129,7 +138,10 @@ router.get("/edit-profile", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
   User.findById(userId)
     .then((userToEdit) => {
-      res.render("user/edit-profile", { user: userToEdit });
+      res.render("user/edit-profile", {
+        user: userToEdit,
+        javascript: "profile",
+      });
     })
     .catch((err) =>
       console.log(`error while displaying edit profile page ${err}`)
