@@ -8,21 +8,34 @@
     </form>
 
     <div class="">
-      <label for="character-id">Filter Spots:</label>
-      <input type="text" name="Spot-category" id="fetch-by-category-input" />
+      <label for="filter-spots">Filter Spots:</label>
+      <select id="fetch-by-category-input" name="category" value="{{category}}">
+        <option value="Beach">Beach</option>
+        <option value="For sunrise">For sunrise</option>
+        <option value="For sunset">For sunset</option>
+        <option value="To bike">To bike</option>
+        <option value="To eat">To eat</option>
+        <option value="To hike">To hike</option>
+        <option value="To hike">To relax</option>
+        <option value="To walk">To walk</option>
+        <option value="To visit">To visit</option>
+
+      </select>
+      {{!-- <input type="text" name="Spot-category" id="fetch-by-category-input" /> --}}
       <button id="fetch-by-cat">Filter</button>
     </div>
+    <div id="cont">
 
-
-    {{#each spots}}
-    <div class="card card-body">
-      <h4>name: {{this.name}}</h4>
-      <p>location: {{this.location}}</p>
-      <p>category: {{this.category}}</p>
-      <p>description: {{this.description}}</p>
-      <p><a href="/spot-details/{{this.id}}" class="btn btn-primary">See more</a>
+      {{#each spots}}
+      <div class="card card-body">
+        <h4>name: {{this.name}}</h4>
+        <p>location: {{this.location}}</p>
+        <p>category: {{this.category}}</p>
+        <p>description: {{this.description}}</p>
+        <p><a href="/spot-details/{{this.id}}" class="btn btn-primary">See more</a>
+      </div>
+      <hr>
+      {{/each}}
     </div>
-    <hr>
-    {{/each}}
   </div>
 </div>
