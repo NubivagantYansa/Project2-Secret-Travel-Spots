@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
+const geocoder = require("../utils/geocoder");
 
 const spotSchema = new Schema(
   {
@@ -12,10 +13,26 @@ const spotSchema = new Schema(
       type: String,
       required: [true, "Description is required."],
     },
-    location: {
+    address: {
       type: String,
-      // TBD
-      //required: [true, "Location is required."],
+      required: [true, "Please add an address."],
+    },
+    //from mapbox
+    location: {
+      type: {
+        type: String,
+        enum: ["Point"],
+        //required: true,
+      },
+      coordinates: {
+        type: [Number],
+        index: "2dsphere",
+      },
+      formattedAddress: String,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
     },
     category: {
       type: String,
@@ -44,5 +61,21 @@ const spotSchema = new Schema(
     timestamps: true,
   }
 );
+
+//. Geocode and create location
+//.pre --> it happens before it is saved in the database
+spotSchema.pre("save", async function (next) {
+  const location = await geocoder.geocode(this.address);
+  //format as a Point
+  this.location = {
+    type: "Point",
+    coordinates: [location[0].longitude, location[0].latitude],
+    formattedAddress: location[0].formattedAddress,
+  };
+
+  // Do not save address
+  this.address = undefined;
+  next();
+});
 
 module.exports = model("Spot", spotSchema);
