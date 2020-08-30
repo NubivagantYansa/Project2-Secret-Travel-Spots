@@ -29,10 +29,6 @@ const spotSchema = new Schema(
         index: "2dsphere",
       },
       formattedAddress: String,
-      createdAt: {
-        type: Date,
-        default: Date.now,
-      },
     },
     category: {
       type: String,
