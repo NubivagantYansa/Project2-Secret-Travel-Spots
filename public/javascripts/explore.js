@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("EXPLORE JS");
 
   const filterById = (id) => {
-    console.log("I AM BEING CLICKED");
     axios
       .get(`${window.address.origin}/explore/search`, { params: { id: id } })
 
@@ -62,4 +61,68 @@ document.addEventListener("DOMContentLoaded", () => {
     zoom: 9,
     center: [-51.5074, 0.1278],
   });
+
+  //fetch spots from apI
+  const getSpots = () => {
+    //use axios to retrieve the info I need - THIS IS TO BE REVIEWED <=================
+    axios
+      .get(`${window.address.origin}/explore/search`, { params: { id: id } })
+
+      .then((spots) => {
+        const obj = spots.data;
+        const input = spots.config.params.id;
+        console.log("json", obj);
+        console.log("this is the input from view", spots.config.params.id);
+
+        // use map to iterate and return in the right format the spots
+        const stores = data.data.map((spot) => {
+          return {
+            type: "Feature",
+            geometry: {
+              type: "Point",
+              coordinates: [
+                spot.location.coordinates[0],
+                spot.location.coordinates[1],
+              ],
+            },
+            properties: {
+              spotId: spot._id,
+            },
+          };
+        });
+        loadMap(spots);
+      })
+      .catch((err) => {
+        console.log(err);
+        err.response.status === 404
+          ? alert(`The id doesn't exist.`)
+          : alert("Server error! Sorry.");
+      });
+  };
+  //load map with points
+  const loadMap = (spots) => {
+    map.addLayer({
+      id: "points",
+      type: "symbol",
+      source: {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: spots,
+        },
+      },
+      properties: {
+        spotId: "001",
+      },
+      layout: {
+        "icon-image": "{icon-15}",
+        "icon-size": 1.5,
+        "text-field": "{spotId}",
+        "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+        "text-offset": [0, 0.9],
+        "text-anchor": "top",
+      },
+    });
+  };
+  getSpots();
 });
