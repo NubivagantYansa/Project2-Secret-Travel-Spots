@@ -111,9 +111,6 @@ document.addEventListener("DOMContentLoaded", () => {
           features: spots,
         },
       },
-      properties: {
-        spotId: "001",
-      },
       layout: {
         "icon-image": "{icon-15}",
         "icon-size": 1.5,
