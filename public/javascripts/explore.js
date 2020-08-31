@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const filterById = (id) => {
     axios
-      .get(`${window.address.origin}/explore/search`, { params: { id: id } })
+      .get(`${window.location.origin}/explore/search`, { params: { id: id } })
 
       .then((spots) => {
         const obj = spots.data;
@@ -62,35 +62,34 @@ document.addEventListener("DOMContentLoaded", () => {
     center: [-51.5074, 0.1278],
   });
 
-  //fetch spots from apI
+  // fetch spots from apI
   const getSpots = () => {
-    //use axios to retrieve the info I need - THIS IS TO BE REVIEWED <=================
+    // 1. use axios to retrieve the JSON of spots
     axios
-      .get(`${window.address.origin}/explore/search`, { params: { id: id } })
+      .get(`${window.location.origin}/explore/search`)
 
       .then((spots) => {
-        const obj = spots.data;
-        const input = spots.config.params.id;
-        console.log("json", obj);
-        console.log("this is the input from view", spots.config.params.id);
+        const obj = spots.data; // list of spots
+        console.log("this is json", obj);
 
-        // use map to iterate and return in the right format the spots
-        const stores = data.data.map((spot) => {
+        // 2. use map to iterate and return in the right format the spots
+        const spotsList = obj.map((spot) => {
+          console.log("inside map", spot);
           return {
             type: "Feature",
             geometry: {
               type: "Point",
               coordinates: [
-                spot.location.coordinates[0],
-                spot.location.coordinates[1],
+                spot.location.coordinates[0], //dynamic, taken from the JSON
+                spot.location.coordinates[1], //dynamic, taken from the JSON
               ],
             },
             properties: {
-              spotId: spot._id,
+              spotName: spot.name,
             },
           };
         });
-        loadMap(spots);
+        loadMap(spotsList);
       })
       .catch((err) => {
         console.log(err);
@@ -99,7 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
           : alert("Server error! Sorry.");
       });
   };
-  //load map with points
+
+  //3. load map with points
   const loadMap = (spots) => {
     map.addLayer({
       id: "points",
