@@ -67,12 +67,12 @@ router.post(
   isLoggedMiddleware,
   fileUploader.single("image"),
   (req, res) => {
-    const { name, description, location, category } = req.body;
+    const { name, description, address, category } = req.body;
     console.log(req.file);
     Spot.create({
       name,
       description,
-      location,
+      address,
       category,
       author: req.session.currentUser._id,
       imageUrl: req.file.path,
@@ -115,16 +115,16 @@ router.post(
   fileUploader.single("image"),
   (req, res) => {
     const { spotId } = req.params;
-    const { name, description, location, category } = req.body;
+    const { name, description, address, category } = req.body;
 
     // const data2 = Object.entries(req.body)
     //   .filter((element) => element[1])
     //   .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
     // validation for empty fields: No empty fields allowed
-    if (!name || !description || !location) {
+    if (!name || !description || !address) {
       res.render("user/edit-spot", {
         errorMessage:
-          "All fields are mandatory. Please provide name, descritpion, location and category!",
+          "All fields are mandatory. Please provide name, descritpion, address and category!",
       });
     }
     // console.log("this is data2", data2);
@@ -138,7 +138,7 @@ router.post(
 
     Spot.findByIdAndUpdate(
       spotId,
-      { name, description, location, category, imageUrl },
+      { name, description, address, category, imageUrl },
       { new: true }
     )
       .then((response) => {

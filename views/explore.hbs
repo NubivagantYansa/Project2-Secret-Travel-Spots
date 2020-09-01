@@ -24,12 +24,13 @@
       {{!-- <input type="text" name="Spot-category" id="fetch-by-category-input" /> --}}
       <button id="fetch-by-cat">Filter</button>
     </div>
+    <div id='map' style='width: 100%; height: 500px; border-radius: 5px'></div>
     <div id="cont">
 
       {{#each spots}}
       <div class="card card-body">
         <h4>name: {{this.name}}</h4>
-        <p>location: {{this.location}}</p>
+        <p>address: {{this.location.formattedAddress}}</p>
         <p>category: {{this.category}}</p>
         <p>description: {{this.description}}</p>
         <p><a href="/spot-details/{{this.id}}" class="btn btn-primary">See more</a>
