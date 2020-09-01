@@ -58,14 +58,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/streets-v11",
-    zoom: 9,
-    center: [-51.5074, 0.1278],
+    // zoom: 9,
+    // center: [-51.5074, 0.1278],
+  });
+
+  map.on("load", function () {
+    map.loadImage("../images/secretLogo.png", async function (error, image) {
+      const features = await getSpots();
+      console.log("FEATURES IN DA HOUSE", features);
+      if (error) throw error;
+      map.addImage("pin", image);
+      map.addSource("point", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features,
+        },
+      });
+      map.addLayer({
+        id: "points",
+        type: "symbol",
+        source: "point",
+        layout: {
+          "icon-image": "pin",
+          "icon-size": 0.03,
+        },
+      });
+    });
   });
 
   // fetch spots from apI
   const getSpots = () => {
     // 1. use axios to retrieve the JSON of spots
-    axios
+    return axios
       .get(`${window.location.origin}/explore/search`)
 
       .then((spots) => {
@@ -89,7 +114,8 @@ document.addEventListener("DOMContentLoaded", () => {
             },
           };
         });
-        loadMap(spotsList);
+        //loadMap(spotsList);
+        return spotsList;
       })
       .catch((err) => {
         console.log(err);
@@ -100,26 +126,46 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //3. load map with points
-  const loadMap = (spots) => {
-    map.addLayer({
-      id: "points",
-      type: "symbol",
-      source: {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: spots,
-        },
-      },
-      layout: {
-        "icon-image": "{icon-15}",
-        "icon-size": 1.5,
-        "text-field": "{spotId}",
-        "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-        "text-offset": [0, 0.9],
-        "text-anchor": "top",
-      },
-    });
-  };
-  getSpots();
+  // const loadMap = (spots) => {
+  //   /*     map.addSource({
+  //     id: "points",
+  //     type: "symbol",
+  //     source: {
+  //       type: "geojson",
+  //       data: {
+  //         type: "FeatureCollection",
+  //         features: [
+  //           {
+  //             type: "Feature",
+  //             geometry: {
+  //               type: "Point",
+  //               coordinates: [0, 0],
+  //             },
+  //             properties: {
+  //               spotName: "Rome",
+  //             },
+  //           },
+  //         ],
+  //       },
+  //     },
+  //     // layout: {
+  //     //   "icon-image": "{icon-15}",
+  //     //   "icon-size": 1.5,
+  //     //   "text-field": "{spotId}",
+  //     //   "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+  //     //   "text-offset": [0, 0.9],
+  //     //   "text-anchor": "top",
+  //     // },
+  //   });
+  //   map.addLayer({
+  //     id: "points",
+  //     type: "symbol",
+  //     source: "point",
+  //     layout: {
+  //       "icon-image": "cat",
+  //       "icon-size": 0.25,
+  //     },
+  //   }); */
+  // };
+  // getSpots();
 });
