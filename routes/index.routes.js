@@ -51,7 +51,7 @@ router.get("/explore", getAllSpots);
 /* GET spot details page */
 router.get("/spot-details/:spotId", getOneSpot);
 
-router.get("/explore/test", (req, res, next) => {
+router.get("/explore/search", (req, res, next) => {
   Spot.find()
     .populate("author")
     .then((spots) => {

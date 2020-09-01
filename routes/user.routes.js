@@ -109,17 +109,45 @@ router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
 });
 
 //.EDIT a spot
-router.post("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
-  const { spotId } = req.params;
-  const { name, description, location, category } = req.body;
-  Spot.findByIdAndUpdate(
-    spotId,
-    { name, description, location, category },
-    { new: true }
-  )
-    .then(() => res.redirect("/user-profile/user-spots/"))
-    .catch((err) => console.log(`error while editing a spot ${err}`));
-});
+router.post(
+  "/user-spots/:spotId/edit",
+  isLoggedMiddleware,
+  fileUploader.single("image"),
+  (req, res) => {
+    const { spotId } = req.params;
+    const { name, description, location, category } = req.body;
+
+    // const data2 = Object.entries(req.body)
+    //   .filter((element) => element[1])
+    //   .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
+    // validation for empty fields: No empty fields allowed
+    if (!name || !description || !location) {
+      res.render("user/edit-spot", {
+        errorMessage:
+          "All fields are mandatory. Please provide name, descritpion, location and category!",
+      });
+    }
+    // console.log("this is data2", data2);
+
+    let imageUrl;
+    if (req.file) {
+      imageUrl = req.file.path;
+    } else {
+      imageUrl = req.body.existingImage;
+    }
+
+    Spot.findByIdAndUpdate(
+      spotId,
+      { name, description, location, category, imageUrl },
+      { new: true }
+    )
+      .then((response) => {
+        console.log("this is response from edit", response);
+        res.redirect("/user-profile/user-spots/");
+      })
+      .catch((err) => console.log(`error while editing a spot ${err}`));
+  }
+);
 
 //.DELETE a spot
 router.post(
