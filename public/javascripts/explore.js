@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("EXPLORE JS");
 
+  //. FILTER BUTTON
   const filterById = (id) => {
     axios
       .get(`${window.location.origin}/explore/search`, { params: { id: id } })
@@ -53,22 +54,23 @@ document.addEventListener("DOMContentLoaded", () => {
       filterById(category);
     });
 
+  // MAPBOX SETTINGS
   mapboxgl.accessToken =
     "pk.eyJ1IjoibnViaXZhZ2FudCIsImEiOiJja2VoZzk0Y3cxOW1uMnFuN203MWh0NG02In0.okCi7PEhM2-3intp25elvQ";
   const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/streets-v11",
-    zoom: 3,
+    zoom: 4,
     center: [12.35804, 41.79284],
   });
 
   map.on("load", function () {
     map.loadImage("../images/secretLogo.png", async function (error, image) {
       const features = await getSpots();
-      console.log("FEATURES IN DA HOUSE", features);
+
       if (error) throw error;
-      map.addImage("pin", image);
-      map.addSource("point", {
+      map.addImage("custom-marker", image);
+      map.addSource("points", {
         type: "geojson",
         data: {
           type: "FeatureCollection",
@@ -76,18 +78,35 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       });
       map.addLayer({
-        id: "points",
+        id: "symbols",
         type: "symbol",
-        source: "point",
+        source: "points",
         layout: {
-          "icon-image": "pin",
+          "icon-image": "custom-marker",
           "icon-size": 0.03,
-          "text-field": "{spotId}",
+          "text-field": ["get", "spotName"],
           "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-          "text-offset": [0, 0.9],
+          "text-offset": [0, 0.5],
           "text-anchor": "top",
         },
       });
+    });
+
+    // Center the map on the coordinates of any clicked symbol from the 'symbols' layer.
+    map.on("click", "symbols", function (e) {
+      map.flyTo({
+        center: e.features[0].geometry.coordinates,
+      });
+    });
+
+    // Change the cursor to a pointer when the it enters a feature in the 'symbols' layer.
+    map.on("mouseenter", "symbols", function () {
+      map.getCanvas().style.cursor = "pointer";
+    });
+
+    // Change it back to a pointer when it leaves.
+    map.on("mouseleave", "symbols", function () {
+      map.getCanvas().style.cursor = "";
     });
   });
 
