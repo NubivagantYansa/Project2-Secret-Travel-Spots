@@ -58,8 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/streets-v11",
-    // zoom: 9,
-    // center: [-51.5074, 0.1278],
+    zoom: 3,
+    center: [12.35804, 41.79284],
   });
 
   map.on("load", function () {
@@ -82,6 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
         layout: {
           "icon-image": "pin",
           "icon-size": 0.03,
+          "text-field": "{spotId}",
+          "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+          "text-offset": [0, 0.9],
+          "text-anchor": "top",
         },
       });
     });

@@ -58,7 +58,7 @@ router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
 
 //.Show CREATE new spot page
 router.get("/create-spot", isLoggedMiddleware, (req, res) => {
-  res.render("user/create-spot");
+  res.render("user/create-spot", { javascript: "createSpot" });
 });
 
 //.CREATE a new spot
