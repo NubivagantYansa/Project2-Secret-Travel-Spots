@@ -136,6 +136,9 @@ router.post(
       imageUrl = req.body.existingImage;
     }
 
+    // Spot.findOneAndUpdate(
+    //   {_id: spotId},
+
     Spot.findByIdAndUpdate(
       spotId,
       { name, description, address, category, imageUrl },
