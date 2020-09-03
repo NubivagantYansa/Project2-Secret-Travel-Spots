@@ -70,23 +70,35 @@ router.get("/create-spot", isLoggedMiddleware, (req, res) => {
   res.render("user/create-spot", { javascript: "createSpot" });
 });
 
+router.post(
+  "/image-upload",
+  isLoggedMiddleware,
+
+  fileUploader.single("image"),
+  (req, res) => {
+    res.json(req.file);
+  }
+);
+
 //.CREATE a new spot
 router.post(
   "/create-spot",
   isLoggedMiddleware,
 
-  fileUploader.single("image"),
   (req, res) => {
-    const { name, description, address, category } = req.body;
-    console.log(req.file);
+    const { address, name, description, category, imageUrl } = req.body;
+    // const { image } = req.file;
+    // const {} =
+    console.log("this is req PATH", req.file.path);
+    console.log("this is req body", req.body);
 
-    if (!name || !description || !address) {
-      res.render("user/create-spot", {
-        errorMessage:
-          "All fields are mandatory. Please provide name, descritpion, address and category!",
-      });
-      return;
-    }
+    // if (!name || !description || !address) {
+    //   res.json({
+    //     errorMessage:
+    //       "All fields are mandatory. Please provide name, descritpion, address and category!",
+    //   });
+    //   return;
+    // }
 
     Spot.create({
       name,
@@ -94,7 +106,7 @@ router.post(
       address,
       category,
       author: req.session.currentUser._id,
-      imageUrl: req.file.path,
+      imageUrl,
     })
       .then((newSpot) => {
         console.log(newSpot);
@@ -104,7 +116,7 @@ router.post(
           { new: true }
         ).then((updatedUser) => {
           console.log(updatedUser);
-          res.redirect("/user-profile");
+          res.json({ path: "/user-profile" });
         });
       })
       .catch((err) => console.log(`error while creating a new spot ${err}`));
