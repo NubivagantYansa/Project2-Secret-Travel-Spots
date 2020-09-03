@@ -70,8 +70,24 @@ spotSchema.pre("save", async function (next) {
   };
 
   // Do not save address
-  this.address = undefined;
+  // this.address = undefined;
   next();
 });
+
+// spotSchema.pre("findOneAndUpdate", async function (next) {
+//   const docToUpdate = await this.model.findOne(this.getQuery());
+//   console.log("this is the schema test", docToUpdate);
+//   //const location = await geocoder.geocode(this.address);
+//   //format as a Point
+//   docToUpdate.location = {
+//     type: "Point",
+//     coordinates: [2, 1],
+//     formattedAddress: "ajdsklasdaklsd randooom",
+//   };
+//   docToUpdate.save();
+//   // Do not save address
+//   // this.address = undefined;
+//   next();
+// });
 
 module.exports = model("Spot", spotSchema);
