@@ -42,7 +42,15 @@ const getOneSpot = (req, res) => {
       console.log(`an error occurred while showing a spot ${err}`)
     );
 };
-
+//controller to check if blanks are filled in
+const checkEmptyBlanks = () => {
+  if (!name || !description || !address) {
+    res.render("user/edit-spot", {
+      errorMessage:
+        "All fields are mandatory. Please provide name, descritpion, address and category!",
+    });
+  }
+};
 //.SHOW ALL user's spots
 router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
   Spot.find({ author: req.session.currentUser._id })
@@ -66,10 +74,20 @@ router.get("/create-spot", isLoggedMiddleware, (req, res) => {
 router.post(
   "/create-spot",
   isLoggedMiddleware,
+
   fileUploader.single("image"),
   (req, res) => {
     const { name, description, address, category } = req.body;
     console.log(req.file);
+
+    if (!name || !description || !address) {
+      res.render("user/create-spot", {
+        errorMessage:
+          "All fields are mandatory. Please provide name, descritpion, address and category!",
+      });
+      return;
+    }
+
     Spot.create({
       name,
       description,

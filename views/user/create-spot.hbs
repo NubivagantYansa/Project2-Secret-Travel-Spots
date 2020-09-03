@@ -1,4 +1,7 @@
-{{!-- {{#if user}} --}}
+{{#if errorMessage}}
+<p class="error">{{errorMessage}}</p>
+{{/if}}
+
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
 <link rel="stylesheet"
   href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
@@ -46,7 +49,3 @@
   </div>
 
 </form>
-{{!-- 
-{{else}}
-<p>Still no logged in user, sorry!</p>
-{{/if}} --}}
