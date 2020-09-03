@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { isLoggedMiddleware } = require("../middlewares/middlewares");
+const geocoder = require("../utils/geocoder");
 
 const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
@@ -115,7 +116,7 @@ router.post(
   fileUploader.single("image"),
   (req, res) => {
     const { spotId } = req.params;
-    const { name, description, address, category } = req.body;
+    let { name, description, address, location, category } = req.body;
 
     // const data2 = Object.entries(req.body)
     //   .filter((element) => element[1])
@@ -127,7 +128,6 @@ router.post(
           "All fields are mandatory. Please provide name, descritpion, address and category!",
       });
     }
-    // console.log("this is data2", data2);
 
     let imageUrl;
     if (req.file) {
@@ -136,19 +136,27 @@ router.post(
       imageUrl = req.body.existingImage;
     }
 
-    // Spot.findOneAndUpdate(
-    //   {_id: spotId},
+    location = geocoder.geocode(address).then((response) => {
+      // format as a Point
+      location = {
+        type: "Point",
+        coordinates: [response[0].longitude, response[0].latitude],
+        formattedAddress: response[0].formattedAddress,
+      };
 
-    Spot.findByIdAndUpdate(
-      spotId,
-      { name, description, address, category, imageUrl },
-      { new: true }
-    )
-      .then((response) => {
-        console.log("this is response from edit", response);
-        res.redirect("/user-profile/user-spots/");
-      })
-      .catch((err) => console.log(`error while editing a spot ${err}`));
+      Spot.findByIdAndUpdate(
+        spotId,
+        { name, description, address, location, category, imageUrl },
+        { new: true }
+      )
+        .then((response) => {
+          console.log("this is response from edit", response);
+          res.redirect("/user-profile/user-spots/");
+        })
+        .catch((err) => console.log(`error while editing a spot ${err}`));
+    });
+    // Spot.findOneAndUpdate(
+    //   { _id: spotId },
   }
 );
 

@@ -84,7 +84,7 @@ spotSchema.pre("save", async function (next) {
 //     coordinates: [2, 1],
 //     formattedAddress: "ajdsklasdaklsd randooom",
 //   };
-
+//   docToUpdate.save();
 //   // Do not save address
 //   // this.address = undefined;
 //   next();

@@ -108,6 +108,18 @@ document.addEventListener("DOMContentLoaded", () => {
     map.on("mouseleave", "symbols", function () {
       map.getCanvas().style.cursor = "";
     });
+
+    // Add geolocate control to the map.
+    map.addControl(
+      new mapboxgl.GeolocateControl({
+        positionOptions: {
+          enableHighAccuracy: true,
+        },
+        trackUserLocation: true,
+      })
+    );
+    // Add zoom and rotation controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
   });
 
   // fetch spots from apI
