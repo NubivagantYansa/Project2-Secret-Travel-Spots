@@ -1,44 +1,46 @@
 <div>
-  <h2>Spot Details</h2>
-  <div>
-    <div class="card card-body">
+  <h2 class="mx-auto">Spot Details</h2>
 
-      <h4>name: {{name}}</h4>
-      <img src="{{imageUrl}}" class="card-img-top" alt="{{name}}">
-      <p>address: {{location.formattedAddress}}</p>
-      <p>category: {{category}}</p>
-      <p>description: {{description}}</p>
-
-      {{!-- see comments --}}
-      {{#each comments}}
-      <div class="card card-body">
-        <p>author: {{this.author.username}}</p>
-        <p>content: {{this.content}}</p>
-      </div>
-      <hr>
-      {{/each}}
+  </form>
 
 
-
-      {{!-- add favourites --}}
-      <h3>Add to your favourites</h3>
+  <div class="card card-body text-center position-relative  p-3 p-md-5 m-md-3 text-center bg-light">
+    <div> {{!-- add favourites --}}
       <form action="/user-profile/spot-details/{{_id}}/fav" method="post">
-        <button type="submit" class="btn btn-danger">Like</button>
-      </form>
+        <button type="submit" class='btn btn-primary float-right'>Add to Favourites</button>
+    </div>
+    <div class="float-left">
+      <h4>{{name}}</h4>
+      <p>Address: {{location.formattedAddress}}</p>
+      <p>Category: {{category}}</p>
+      <p>Description: {{description}}</p>
+    </div>
+    <img src="{{imageUrl}}" class="card-img-top" alt="{{name}}">
 
-      {{!-- add comment form --}}
-      <h3>Add comment</h3>
-      <form action="/spot-details/{{_id}}/comment" method="POST">
-        <textarea name="content" id="comment-content-input" cols="30" rows="2"></textarea>
-        <button type="submit">Comment</button>
-      </form>
-
-
-      {{!-- <p><a href="/user-profile/user-spots/{{this.id}}" class="btn btn-primary">Back</a> ||<a --}}
-      {{!-- href="/user-profile/user-spots/{{this.id}}/edit" class="btn btn-primary">Edit</a></p> --}}
-
-
+    {{!-- see comments --}}
+    {{#each comments}}
+    <div class="card card-body">
+      <p>Author: {{this.author.username}}</p>
+      <p> {{this.content}}</p>
     </div>
     <hr>
+    {{/each}}
+
+    <br>
+    <div>
+      {{!-- add comment form --}}
+      <h3>Add comment</h3>
+      <form class="form-signin mx-auto" action="/spot-details/{{_id}}/comment" method="POST">
+        <textarea name="content" id="comment-content-input" cols="30" rows="2" class="form-control"></textarea> <br>
+        <button type="submit" class="btn btn-primary">Comment</button>
+      </form>
+    </div>
+
+
+    {{!-- <p><a href="/user-profile/user-spots/{{this.id}}" class="btn btn-primary">Back</a> ||<a --}}
+    {{!-- href="/user-profile/user-spots/{{this.id}}/edit" class="btn btn-primary">Edit</a></p> --}}
+
+
   </div>
+  <hr>
 </div>

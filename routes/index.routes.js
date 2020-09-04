@@ -4,7 +4,9 @@ const User = require("../models/User.model");
 const Spot = require("../models/Spot.model");
 const { create } = require("../models/User.model");
 
-// .Controller to render all spots
+/*    CONTROLLERS     */
+
+// .To render all spots
 const getAllSpots = (req, res) => {
   Spot.find()
     .populate("author")
@@ -16,7 +18,7 @@ const getAllSpots = (req, res) => {
     .catch((err) => console.log(`error while getting the spots page ${err}`));
 };
 
-// .Controller to render one spot
+// .To render one spot
 const getOneSpot = (req, res) => {
   console.log(req.params);
   const { spotId } = req.params;
@@ -38,19 +40,19 @@ const getOneSpot = (req, res) => {
     );
 };
 
-/* GET home page */
+/* GET - render home page */
 router.get("/", (req, res, next) => res.render("index"));
 
-/* GET the about page */
-
+/* GET - render the about page */
 router.get("/about", (req, res, next) => res.render("about"));
 
-/* GET Explore page */
+/* GET - render Explore page */
 router.get("/explore", getAllSpots);
 
-/* GET spot details page */
+/* GET - render spot details page */
 router.get("/spot-details/:spotId", getOneSpot);
 
+/* GET - render search filter details  */
 router.get("/explore/search", (req, res, next) => {
   Spot.find()
     .populate("author")
@@ -59,7 +61,5 @@ router.get("/explore/search", (req, res, next) => {
     })
     .catch((err) => console.log(`error while getting the spots page ${err}`));
 });
-
-//res.json
 
 module.exports = router;

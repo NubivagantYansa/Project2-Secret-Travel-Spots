@@ -4,12 +4,12 @@
     {{!-- <span> <img src="../images/secretLogo.png" alt="logo" class="img-fluid"></span> --}}
     <h1>Explore Page</h1>
 
-    <div id="map" style="width: 100%; height: 500px; border-radius: 5px"></div>
+    <div id="map" style="width: 100%; height: 500px; border-radius: 5px;"></div>
 
-
+    <br>
 
     <div class="">
-      <label for="filter-spots">Filter Spots:</label>
+      <label for="filter-spots">Filter Spots by Category:</label>
       <select id="fetch-by-category-input" name="category" value="{{category}}">
         <option value="Beach">Beach</option>
         <option value="For sunrise">For sunrise</option>
@@ -22,16 +22,17 @@
         <option value="To visit">To visit</option>
 
       </select>
-      {{!-- <input type="text" name="Spot-category" id="fetch-by-category-input" /> --}}
-      <button id="fetch-by-cat">Filter</button>
+      <button id="fetch-by-cat" class="btn btn-primary">Filter</button>
     </div>
-    <div class="">
+    <br>
+
+    {{!-- <div class="">
       <label for="filter-spots-by-name">Find by Name:</label>
       <input type="text" id="fetch-by-name" name="name">
       <button id="fetch-by-name">Find</button>
-    </div>
+    </div> --}}
 
-    <div id='map' style='width: 100%; height: 500px; border-radius: 5px'></div>
+
     <div id="cont">
 
       {{#each spots}}

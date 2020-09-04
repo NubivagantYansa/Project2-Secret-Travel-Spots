@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("CREATE SPOT JS");
+
+  /* MAPBOX settings */
   mapboxgl.accessToken =
     "pk.eyJ1IjoibnViaXZhZ2FudCIsImEiOiJja2VoZzk0Y3cxOW1uMnFuN203MWh0NG02In0.okCi7PEhM2-3intp25elvQ";
   var map = new mapboxgl.Map({
@@ -16,42 +18,36 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   );
 
-  document.getElementById("get-location").addEventListener("click", (event) => {
-    event.preventDefault();
-    // console.log("hello world!");
-    getLocation();
-  });
+  // Add geolocate control to the map.
+  map.addControl(
+    new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true,
+      },
+      trackUserLocation: true,
+    })
+  );
 
-  const location = document.getElementById("address-input");
+  // Add zoom and rotation controls to the map.
+  map.addControl(new mapboxgl.NavigationControl());
 
-  getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-  };
-
-  showPosition = (position) => {
-    location.value = position.coords.latitude + " " + position.coords.longitude;
-  };
+  /*  GET 'name, description, category, geolocator' inputs from CREAT-SPOT form and send it to the server with AXIOS to create new spot */
 
   let image;
 
   document.getElementById("create-spot").addEventListener("submit", (event) => {
     event.preventDefault();
+
+    // Inputs from form.
     const name = document.getElementById("name-input").value;
     const description = document.getElementById("description-input").value;
     const category = document.getElementById("category-input").value;
     const input = document.querySelector(".mapboxgl-ctrl-geocoder input").value;
-    console.log("this is IMAGE from 2nd AXIOS", image);
-    console.log("random test", input, image, name, description, category);
+
     sendInput(input, image, name, description, category);
   });
 
   const sendInput = (input, image, name, description, category) => {
-    // const uploadData = new FormData();
-    // uploadData.append("image", image);
     axios
       .post(`${window.location.origin}/user-profile/create-spot`, {
         name: name,
@@ -61,19 +57,19 @@ document.addEventListener("DOMContentLoaded", () => {
         imageUrl: image,
       })
       .then((response) => {
-        console.log(response);
+        //  Show ERROR MESSAGE if there are missing inputs.
         // if (response.data.errorMessage) {
         //   //dom manipulation for error
         //   return;
         // }
-
-        window.location = response.data.path;
+        window.location = response.data.path; //  Replaces the 'render' fresh page of the backend.
       })
       .catch((err) => {
         console.log("these was an error with your axios request", err);
       });
   };
 
+  /* GET the image from form and UPLOAD on Cloudinary with AXIOS */
   document.getElementById("image-input").addEventListener("change", (event) => {
     image = event.target.files[0];
     const uploadData = new FormData();
@@ -84,11 +80,30 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
-        //Cloudinary URL
-        image = response.data.path;
+        image = response.data.path; //Cloudinary URL
       })
       .catch((err) => {
         console.log("Error while preparing image for Cloudinary", err);
       });
   });
 });
+
+//USE MY LOCATION BUTTON
+// document.getElementById("get-location").addEventListener("click", (event) => {
+//   event.preventDefault();
+//   getLocation();
+// });
+
+// const location = document.getElementById("address-input");
+
+// getLocation = () => {
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(showPosition);
+//   } else {
+//     alert("Geolocation is not supported by this browser.");
+//   }
+// };
+
+// showPosition = (position) => {
+//   location.value = position.coords.latitude + " " + position.coords.longitude;
+// };

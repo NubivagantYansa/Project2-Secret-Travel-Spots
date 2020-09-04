@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log("EXPLORE JS");
 
-  //. FILTER BUTTON
+  /*  FILTER BUTTON   */
   const filterById = (id) => {
     axios
       .get(`${window.location.origin}/explore/search`, { params: { id: id } })
@@ -12,17 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("json", obj);
         console.log("this is the input from view", spots.config.params.id);
 
-        // DOM manupulation
         let item = "";
 
-        // 1.loop through array of objects
-        // 2. deconstruct properties name, address,category
-        // 3. show only those with category = spots.config.params.id
-
+        // 1.loop through array of objects - 2. deconstruct properties name, address,category - 3. show only those with category = spots.config.params.id
         let result = obj.filter((spot) => spot.category == input);
 
-        result.forEach((obj) => {
-          const { name, description, address, category, imageUrl } = obj;
+        result.forEach((spot) => {
+          const { name, description, address, category, imageUrl } = spot;
 
           item += `
         <div class="card card-body">
@@ -45,12 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
+  //  Event Listener for FILTER Button
   document
     .getElementById("fetch-by-cat")
     .addEventListener("click", function (event) {
       event.preventDefault();
-      // console.log("hello world!");
-      const category = document.getElementById("fetch-by-category-input").value; // input id of item to be retrived
+      const category = document.getElementById("fetch-by-category-input").value; // input id of item to be retrived.
       filterById(category);
     });
 
@@ -98,16 +94,16 @@ document.addEventListener("DOMContentLoaded", () => {
   //     });
   // };
 
-  document
-    .getElementById("fetch-by-cat")
-    .addEventListener("click", function (event) {
-      event.preventDefault();
-      // console.log("hello world!");
-      const category = document.getElementById("fetch-by-category-input").value; // input id of item to be retrived
-      filterById(category);
-    });
+  // document
+  //   .getElementById("fetch-by-cat")
+  //   .addEventListener("click", function (event) {
+  //     event.preventDefault();
 
-  // MAPBOX SETTINGS
+  //     const category = document.getElementById("fetch-by-category-input").value; // input id of item to be retrived
+  //     filterById(category);
+  //   });
+
+  /*   MAPBOX SETTINGS  */
   mapboxgl.accessToken =
     "pk.eyJ1IjoibnViaXZhZ2FudCIsImEiOiJja2VoZzk0Y3cxOW1uMnFuN203MWh0NG02In0.okCi7PEhM2-3intp25elvQ";
   const map = new mapboxgl.Map({
@@ -124,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (error) throw error;
       map.addImage("custom-marker", image);
       map.addSource("points", {
+        // Collect data from spots.
         type: "geojson",
         data: {
           type: "FeatureCollection",
@@ -131,6 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
       });
       map.addLayer({
+        //  Add pins to the map.
         id: "symbols",
         type: "symbol",
         source: "points",
@@ -202,7 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
             },
           };
         });
-        //loadMap(spotsList);
         return spotsList;
       })
       .catch((err) => {
@@ -212,48 +209,4 @@ document.addEventListener("DOMContentLoaded", () => {
           : alert("Server error! Sorry.");
       });
   };
-
-  //3. load map with points
-  // const loadMap = (spots) => {
-  //   /*     map.addSource({
-  //     id: "points",
-  //     type: "symbol",
-  //     source: {
-  //       type: "geojson",
-  //       data: {
-  //         type: "FeatureCollection",
-  //         features: [
-  //           {
-  //             type: "Feature",
-  //             geometry: {
-  //               type: "Point",
-  //               coordinates: [0, 0],
-  //             },
-  //             properties: {
-  //               spotName: "Rome",
-  //             },
-  //           },
-  //         ],
-  //       },
-  //     },
-  //     // layout: {
-  //     //   "icon-image": "{icon-15}",
-  //     //   "icon-size": 1.5,
-  //     //   "text-field": "{spotId}",
-  //     //   "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
-  //     //   "text-offset": [0, 0.9],
-  //     //   "text-anchor": "top",
-  //     // },
-  //   });
-  //   map.addLayer({
-  //     id: "points",
-  //     type: "symbol",
-  //     source: "point",
-  //     layout: {
-  //       "icon-image": "cat",
-  //       "icon-size": 0.25,
-  //     },
-  //   }); */
-  // };
-  // getSpots();
 });

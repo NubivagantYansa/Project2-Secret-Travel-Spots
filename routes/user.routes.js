@@ -9,7 +9,9 @@ const Comment = require("../models/Comment.model");
 
 const fileUploader = require("../configs/cloudinary.config");
 
-//. Controller to render all spots
+/*    CONTROLLERS     */
+
+//  .To render all spots
 const getAllSpots = (req, res) => {
   Spot.find()
     .populate("author")
@@ -20,8 +22,7 @@ const getAllSpots = (req, res) => {
     })
     .catch((err) => console.log(`error while getting the spots page ${err}`));
 };
-
-// .Controller to render one spot
+//  .To render one spot
 const getOneSpot = (req, res) => {
   console.log(req.params);
   const { spotId } = req.params;
@@ -42,19 +43,10 @@ const getOneSpot = (req, res) => {
       console.log(`an error occurred while showing a spot ${err}`)
     );
 };
-//controller to check if blanks are filled in
-const checkEmptyBlanks = () => {
-  if (!name || !description || !address) {
-    res.render("user/edit-spot", {
-      errorMessage:
-        "All fields are mandatory. Please provide name, descritpion, address and category!",
-    });
-  }
-};
-//.SHOW ALL user's spots
+
+/*   GET - render USER'S SPOTS page */
 router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
   Spot.find({ author: req.session.currentUser._id })
-    // ({author: req.session.currentUser._id})
     .populate("author")
     .then((spotsFromDb) => {
       console.log(`spots ${JSON.stringify(spotsFromDb, null, 4)} here`);
@@ -65,11 +57,12 @@ router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
     );
 });
 
-//.Show CREATE new spot page
+/*   GET - render CREATE NEW SPOT page   */
 router.get("/create-spot", isLoggedMiddleware, (req, res) => {
   res.render("user/create-spot", { javascript: "createSpot" });
 });
 
+/*   POST - Upload image in Cloudinary  (CREATE NEW SPOT page) */
 router.post(
   "/image-upload",
   isLoggedMiddleware,
@@ -80,16 +73,14 @@ router.post(
   }
 );
 
-//.CREATE a new spot
+/*   POST - CREATE NEW SPOT (CREATE NEW SPOT page) */
 router.post(
   "/create-spot",
   isLoggedMiddleware,
 
   (req, res) => {
     const { address, name, description, category, imageUrl } = req.body;
-    // const { image } = req.file;
-    // const {} =
-    // console.log("this is req PATH", req.file.path);
+
     console.log("this is req body", req.body);
 
     // if (!name || !description || !address) {
@@ -123,10 +114,10 @@ router.post(
   }
 );
 
-//.Show a SINGLE SPOT from user spots
+/*  GET - render SPOT-details page  */
 router.get("/user-spots/:spotId", getOneSpot);
 
-//.Show EDIT or DELETE a spot
+/*  GET - render EDIT SPOT  page  */
 router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
   const { spotId } = req.params;
   Spot.findById(spotId)
@@ -139,7 +130,7 @@ router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
     );
 });
 
-//.EDIT a spot
+/*  POST -  EDIT SPOT details  */
 router.post(
   "/user-spots/:spotId/edit",
   isLoggedMiddleware,
@@ -151,6 +142,7 @@ router.post(
     // const data2 = Object.entries(req.body)
     //   .filter((element) => element[1])
     //   .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
+
     // validation for empty fields: No empty fields allowed
     if (!name || !description || !address) {
       res.render("user/edit-spot", {
@@ -158,7 +150,7 @@ router.post(
           "All fields are mandatory. Please provide name, descritpion, address and category!",
       });
     }
-
+    //   controls image in edit
     let imageUrl;
     if (req.file) {
       imageUrl = req.file.path;
@@ -166,6 +158,7 @@ router.post(
       imageUrl = req.body.existingImage;
     }
 
+    //  transform address in coordinates
     location = geocoder.geocode(address).then((response) => {
       // format as a Point
       location = {
@@ -185,12 +178,10 @@ router.post(
         })
         .catch((err) => console.log(`error while editing a spot ${err}`));
     });
-    // Spot.findOneAndUpdate(
-    //   { _id: spotId },
   }
 );
 
-//.DELETE a spot
+/*  POST - Delete a spot */
 router.post(
   "/user-spots/:spotId/edit/delete",
   isLoggedMiddleware,
@@ -202,7 +193,9 @@ router.post(
   }
 );
 
-//.Show EDIT PROFILE
+/*    USER PROFILE OPTIONS -------------------- */
+
+/*  GET - render EDIT USER PROFILE  */
 router.get("/edit-profile", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
   User.findById(userId)
@@ -214,11 +207,9 @@ router.get("/edit-profile", isLoggedMiddleware, (req, res) => {
     );
 });
 
-//.EDIT user's profile
+/*  POST -  EDIT USER PROFILE  */
 router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
-  // console.log("body post", JSON.stringify(req.body, null, 4));
-  // console.log("session", req.session.currentUser._id);
 
   //validation for empty fields:
   //.1 No empty fields allowed
@@ -251,7 +242,7 @@ router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
     .catch((err) => console.log(`error while editing user's profile ${err}`));
 });
 
-//.DELETE user's profile
+/*  POST -  DELETE USER PROFILE  */
 router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
 
@@ -264,8 +255,7 @@ router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
     .catch((err) => console.log(`error while deleting user ${err}`));
 });
 
-//.Get all fav spots
-
+/*  GET -  render USER's favourite spots   */
 router.get("/user-favourites", isLoggedMiddleware, (req, res, next) => {
   User.findById(req.session.currentUser._id)
     // ({author: req.session.currentUser._id})
@@ -286,10 +276,10 @@ router.get("/user-favourites", isLoggedMiddleware, (req, res, next) => {
     );
 });
 
-//.Get favourite page - details
+/*  GET -  render favourite spot - spot's details   */
 router.get("/user-favourites/:spotId", isLoggedMiddleware, getAllSpots);
 
-//.Post new favourite
+/*  POST -  create new favourite spot   */
 router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
   console.log("this is params", req.params);
 
@@ -307,18 +297,5 @@ router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
 
     .catch((err) => console.log(`Error after creating the favourite: ${err}`));
 });
-
-// function getAllSpots(req, res) {
-//   Spot.find()
-//     .populate("author")
-//     .then((spots) => {
-//       res.render("spot-details", spots);
-//     })
-//     .catch((err) =>
-//       console.log(`error while getting the spot details page ${err}`)
-//     );
-// }
-
-// router.get("/explore", getAllSpots);
 
 module.exports = router;
