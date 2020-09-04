@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let result = obj.filter((spot) => spot.category == input);
 
         result.forEach((obj) => {
-          const { name, description, address, category, imageUrl } = obj;
+          const { _id, name, description, address, category, imageUrl } = obj;
 
           item += `
         <div class="card card-body">
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>address: ${address}</p>
         <p>category: ${category}</p>
         <p>description: ${description}</p>
-        <p><a href="/spot-details/${id}" class="btn btn-primary">See more</a>
+        <p><a href="/spot-details/${_id}" class="btn btn-primary">See more</a>
       </div>
       <hr>`;
         });
