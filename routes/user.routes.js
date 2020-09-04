@@ -241,6 +241,18 @@ router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
     .catch((err) => console.log(`Error after creating the favourite: ${err}`));
 });
 
+/*  POST - Remove from favourites */
+// router.post(
+//   "/spot-details/:spotId/fav/delete",
+//   isLoggedMiddleware,
+//   (req, res) => {
+//     const { spotId } = req.params;
+//     Spot.findByIdAndDelete(spotId)
+//       .then(() => res.redirect("/user-profile/user-spots"))
+//       .catch((err) => console.log(`error while deleting a spot ${err}`));
+//   }
+// );
+
 /*    USER PROFILE OPTIONS -------------------- */
 
 /*  GET - render EDIT USER PROFILE  */

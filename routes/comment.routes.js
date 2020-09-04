@@ -45,8 +45,5 @@ router.post("/spot-details/:spotId/comment", isLoggedMiddleware, (req, res) => {
 
     .catch((err) => console.log(`Error after creating the comment: ${err}`));
 });
-//if I use the if statement, it shows this error. otherwise it works (I cannot comment)
-//what if we dom manipulation to show the comment section only if you're logged in? You can't comment any if you're not
-// Error after creating the comment: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 
 module.exports = router;

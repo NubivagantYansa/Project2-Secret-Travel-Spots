@@ -1,46 +1,44 @@
 <div>
   <h2 class="mx-auto">Spot Details</h2>
+  {{!-- add favourites --}}
 
-  </form>
-
-
-  <div class="card card-body text-center position-relative  p-3 p-md-5 m-md-3 text-center bg-light">
-    <div> {{!-- add favourites --}}
+  <div>
+    <div class="card card-body text-center position-relative  p-3 p-md-5 m-md-3 text-center bg-light">
       <form action="/user-profile/spot-details/{{_id}}/fav" method="post">
-        <button type="submit" class='btn btn-primary float-right'>Add to Favourites</button>
-    </div>
-    <div class="float-left">
+        <button type="submit" class="btn btn-primary float-right">Add to Favourites</button>
+      </form>
       <h4>{{name}}</h4>
       <p>Address: {{location.formattedAddress}}</p>
       <p>Category: {{category}}</p>
       <p>Description: {{description}}</p>
-    </div>
-    <img src="{{imageUrl}}" class="card-img-top" alt="{{name}}">
+      <img src="{{imageUrl}}" class="card-img-top" alt="{{name}}">
 
-    {{!-- see comments --}}
-    {{#each comments}}
-    <div class="card card-body">
-      <p>Author: {{this.author.username}}</p>
-      <p> {{this.content}}</p>
-    </div>
-    <hr>
-    {{/each}}
+      {{!-- see comments --}}
+      {{#each comments}}
+      <div class="card card-body">
+        <p>Author: {{this.author.username}}</p>
+        <p> {{this.content}}</p>
+      </div>
+      <hr>
+      {{/each}}
 
-    <br>
-    <div>
+
+
+
+      <br>
       {{!-- add comment form --}}
       <h3>Add comment</h3>
       <form class="form-signin mx-auto" action="/spot-details/{{_id}}/comment" method="POST">
         <textarea name="content" id="comment-content-input" cols="30" rows="2" class="form-control"></textarea> <br>
         <button type="submit" class="btn btn-primary">Comment</button>
       </form>
+
+
+      {{!-- <p><a href="/user-profile/user-spots/{{this.id}}" class="btn btn-primary">Back</a> ||<a --}}
+      {{!-- href="/user-profile/user-spots/{{this.id}}/edit" class="btn btn-primary">Edit</a></p> --}}
+
+
     </div>
-
-
-    {{!-- <p><a href="/user-profile/user-spots/{{this.id}}" class="btn btn-primary">Back</a> ||<a --}}
-    {{!-- href="/user-profile/user-spots/{{this.id}}/edit" class="btn btn-primary">Edit</a></p> --}}
-
-
+    <hr>
   </div>
-  <hr>
 </div>
