@@ -123,7 +123,10 @@ router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
   Spot.findById(spotId)
     .then((spotToEdit) => {
       console.log(spotToEdit);
-      res.render("user/edit-spot", spotToEdit);
+      res.render("user/edit-spot", {
+        javascript: "editSpot",
+        spot: spotToEdit,
+      });
     })
     .catch((err) =>
       console.log(`error while displaying spot edit page ${err}`)
@@ -134,29 +137,31 @@ router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
 router.post(
   "/user-spots/:spotId/edit",
   isLoggedMiddleware,
-  fileUploader.single("image"),
+  // fileUploader.single("image"),
   (req, res) => {
+    console.log("this is the body", req.body);
     const { spotId } = req.params;
-    let { name, description, address, location, category } = req.body;
+    //console.log("this is the body", req.body);
+    let { name, description, address, location, category, imageUrl } = req.body;
 
     // const data2 = Object.entries(req.body)
     //   .filter((element) => element[1])
     //   .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
 
     // validation for empty fields: No empty fields allowed
-    if (!name || !description || !address) {
-      res.render("user/edit-spot", {
-        errorMessage:
-          "All fields are mandatory. Please provide name, descritpion, address and category!",
-      });
-    }
+    // if (!name || !description || !address) {
+    //   res.render("user/edit-spot", {
+    //     errorMessage:
+    //       "All fields are mandatory. Please provide name, descritpion, address and category!",
+    //   });
+    // }
     //   controls image in edit
-    let imageUrl;
-    if (req.file) {
-      imageUrl = req.file.path;
-    } else {
-      imageUrl = req.body.existingImage;
-    }
+
+    // if (req.file) {
+    //   imageUrl = req.file.path;
+    // } else {
+    //   imageUrl = req.body.existingImage;
+    // }
 
     //  transform address in coordinates
     location = geocoder.geocode(address).then((response) => {
@@ -174,7 +179,7 @@ router.post(
       )
         .then((response) => {
           console.log("this is response from edit", response);
-          res.redirect("/user-profile/user-spots/");
+          res.json({ path: "/user-profile/user-spots/" });
         })
         .catch((err) => console.log(`error while editing a spot ${err}`));
     });
@@ -192,6 +197,49 @@ router.post(
       .catch((err) => console.log(`error while deleting a spot ${err}`));
   }
 );
+
+/*  GET -  render USER's favourite spots   */
+router.get("/user-favourites", isLoggedMiddleware, (req, res, next) => {
+  User.findById(req.session.currentUser._id)
+    // ({author: req.session.currentUser._id})
+    .populate("favSpots")
+    // .populate({
+    //   path: "favSpots",
+    //   populate: {
+    //     path: "author",
+    //     model: "Spot",
+    //   },
+    // })
+    .then((spotsFromDb) => {
+      console.log(`spots ${JSON.stringify(spotsFromDb, null, 4)} here`);
+      res.render("user/favourite-spots", { spots: spotsFromDb });
+    })
+    .catch((err) =>
+      console.log(`something happened while getting movies ${err}`)
+    );
+});
+
+/*  GET -  render favourite spot - spot's details   */
+router.get("/user-favourites/:spotId", isLoggedMiddleware, getAllSpots);
+
+/*  POST -  create new favourite spot   */
+router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
+  console.log("this is params", req.params);
+
+  const { spotId } = req.params;
+  User.findByIdAndUpdate(
+    req.session.currentUser._id,
+    { $addToSet: { favSpots: spotId } },
+    { new: true }
+  )
+    .then((newUser) => {
+      console.log(newUser);
+      req.session.currentUser = newUser;
+      res.redirect("/explore");
+    })
+
+    .catch((err) => console.log(`Error after creating the favourite: ${err}`));
+});
 
 /*    USER PROFILE OPTIONS -------------------- */
 
@@ -253,49 +301,6 @@ router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
       res.redirect("/signup");
     })
     .catch((err) => console.log(`error while deleting user ${err}`));
-});
-
-/*  GET -  render USER's favourite spots   */
-router.get("/user-favourites", isLoggedMiddleware, (req, res, next) => {
-  User.findById(req.session.currentUser._id)
-    // ({author: req.session.currentUser._id})
-    .populate("favSpots")
-    // .populate({
-    //   path: "favSpots",
-    //   populate: {
-    //     path: "author",
-    //     model: "Spot",
-    //   },
-    // })
-    .then((spotsFromDb) => {
-      console.log(`spots ${JSON.stringify(spotsFromDb, null, 4)} here`);
-      res.render("user/favourite-spots", { spots: spotsFromDb });
-    })
-    .catch((err) =>
-      console.log(`something happened while getting movies ${err}`)
-    );
-});
-
-/*  GET -  render favourite spot - spot's details   */
-router.get("/user-favourites/:spotId", isLoggedMiddleware, getAllSpots);
-
-/*  POST -  create new favourite spot   */
-router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
-  console.log("this is params", req.params);
-
-  const { spotId } = req.params;
-  User.findByIdAndUpdate(
-    req.session.currentUser._id,
-    { $addToSet: { favSpots: spotId } },
-    { new: true }
-  )
-    .then((newUser) => {
-      console.log(newUser);
-      req.session.currentUser = newUser;
-      res.redirect("/explore");
-    })
-
-    .catch((err) => console.log(`Error after creating the favourite: ${err}`));
 });
 
 module.exports = router;

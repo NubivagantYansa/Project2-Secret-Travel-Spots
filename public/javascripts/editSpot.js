@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("CREATE SPOT JS");
+  console.log("EDIT SPOT JS");
 
   /* MAPBOX settings */
   mapboxgl.accessToken =
@@ -32,24 +32,25 @@ document.addEventListener("DOMContentLoaded", () => {
   map.addControl(new mapboxgl.NavigationControl());
 
   /*  GET 'name, description, category, geolocator' inputs from CREAT-SPOT form and send it to the server with AXIOS to create new spot */
-
   let image;
 
-  document.getElementById("create-spot").addEventListener("submit", (event) => {
+  document.getElementById("edit-spot").addEventListener("submit", (event) => {
     event.preventDefault();
 
     // Inputs from form.
+    const _id = document.getElementById("_id-input").value;
     const name = document.getElementById("name-input").value;
     const description = document.getElementById("description-input").value;
     const category = document.getElementById("category-input").value;
     const input = document.querySelector(".mapboxgl-ctrl-geocoder input").value;
 
-    sendInput(input, image, name, description, category);
+    sendInput(input, image, name, description, category, _id);
   });
 
-  const sendInput = (input, image, name, description, category) => {
+  const sendInput = (input, image, name, description, category, _id) => {
     axios
-      .post(`${window.location.origin}/user-profile/create-spot`, {
+      .post(`${window.location.origin}/user-profile/user-spots/${_id}/edit`, {
+        _id: _id,
         name: name,
         description: description,
         address: input,
@@ -87,23 +88,3 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 });
-
-//USE MY LOCATION BUTTON
-// document.getElementById("get-location").addEventListener("click", (event) => {
-//   event.preventDefault();
-//   getLocation();
-// });
-
-// const location = document.getElementById("address-input");
-
-// getLocation = () => {
-//   if (navigator.geolocation) {
-//     navigator.geolocation.getCurrentPosition(showPosition);
-//   } else {
-//     alert("Geolocation is not supported by this browser.");
-//   }
-// };
-
-// showPosition = (position) => {
-//   location.value = position.coords.latitude + " " + position.coords.longitude;
-// };
