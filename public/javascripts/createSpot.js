@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const description = document.getElementById("description-input").value;
     const category = document.getElementById("category-input").value;
     const input = document.querySelector(".mapboxgl-ctrl-geocoder input").value;
-    //console.log(image);
+    console.log("this is IMAGE from 2nd AXIOS", image);
     console.log("random test", input, image, name, description, category);
     sendInput(input, image, name, description, category);
   });
@@ -75,17 +75,16 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   document.getElementById("image-input").addEventListener("change", (event) => {
-    console.log(event.target.files);
-    //  image = event.target.files[0];
-    // axios.post (headers above uploadData, bla bla bla).then(response.data.path -> image url
+    image = event.target.files[0];
     const uploadData = new FormData();
     uploadData.append("image", image);
+
     axios
       .post(`${window.location.origin}/user-profile/image-upload`, uploadData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
-        // image = response.data.path)
+        //Cloudinary URL
         image = response.data.path;
       })
       .catch((err) => {

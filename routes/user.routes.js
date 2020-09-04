@@ -89,7 +89,7 @@ router.post(
     const { address, name, description, category, imageUrl } = req.body;
     // const { image } = req.file;
     // const {} =
-    console.log("this is req PATH", req.file.path);
+    // console.log("this is req PATH", req.file.path);
     console.log("this is req body", req.body);
 
     // if (!name || !description || !address) {
@@ -109,7 +109,7 @@ router.post(
       imageUrl,
     })
       .then((newSpot) => {
-        console.log(newSpot);
+        console.log("THIS IS NEW SPOT", newSpot);
         User.findByIdAndUpdate(
           req.session.currentUser._id,
           { $addToSet: { spots: newSpot._id } },
