@@ -83,13 +83,13 @@ router.post(
 
     console.log("this is req body", req.body);
 
-    // if (!name || !description || !address) {
-    //   res.json({
-    //     errorMessage:
-    //       "All fields are mandatory. Please provide name, descritpion, address and category!",
-    //   });
-    //   return;
-    // }
+    if (!name || !description || !address) {
+      res.json({
+        errorMessage:
+          "Some fields are mandatory. Please provide name, description, address and category!",
+      });
+      return;
+    }
 
     Spot.create({
       name,

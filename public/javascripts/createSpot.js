@@ -58,11 +58,18 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .then((response) => {
         //  Show ERROR MESSAGE if there are missing inputs.
-        // if (response.data.errorMessage) {
-        //   //dom manipulation for error
-        //   return;
-        // }
-        window.location = response.data.path; //  Replaces the 'render page' of the backend.
+        if (response.data.errorMessage) {
+          //dom manipulation for error
+          let err = "";
+          err += `
+       
+        <p>Some fields are mandatory. Please provide name, description, address and category!</p>
+      `;
+
+          document.getElementById("error-message").innerHTML = err;
+          return;
+        }
+        //window.location = response.data.path; //  Replaces the 'render page' of the backend.
       })
       .catch((err) => {
         console.log("these was an error with your axios request", err);

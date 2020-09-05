@@ -4,54 +4,56 @@
   href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
 
 
-{{#if errorMessage}}
+{{!-- {{#if errorMessage}}
 <p class="error">{{errorMessage}}</p>
-{{/if}}
+{{/if}} --}}
 
 
-
-<h2>Create a new spot</h2>
-<form id="create-spot" action="/user-profile/create-spot" method="post" enctype="multipart/form-data">
-  <div>
-    <label for="name-input">Name:</label>
-    <input type="text" name="name" id="name-input" class="form-control" placeholder="Add here the name of the spot" />
-  </div>
-  <div>
-    <label for="description-input">Description:</label>
-    <textarea name="description" id="description-input" cols="30" rows="5" class="form-control"
-      placeholder="Add here a brief description of the spot"></textarea>
-  </div>
-  <div>
-    {{!-- <label for="address-input">Location:</label>
+<div class="container">
+  <div id="error-message"></div>
+  <br>
+  <h2>Create a new spot</h2>
+  <form id="create-spot" action="/user-profile/create-spot" method="post" enctype="multipart/form-data">
+    <div>
+      <label for="name-input">Name:</label>
+      <input type="text" name="name" id="name-input" class="form-control" placeholder="Add here the name of the spot" />
+    </div>
+    <div>
+      <label for="description-input">Description:</label>
+      <textarea name="description" id="description-input" cols="30" rows="5" class="form-control"
+        placeholder="Add here a brief description of the spot"></textarea>
+    </div>
+    <div>
+      {{!-- <label for="address-input">Location:</label>
     <input type="text" name="address" id="address-input" class="form-control"
       placeholder="Type an address <Street, City, (CAP), Country> or click the <Use My Location> button" />
     <button id="get-location" class="btn btn-primary">Use My Location</button> --}}
-    <p>Address:</p>
+      <p>Address:</p>
 
-    <div id="map" style="width: 100%; height: 500px; border-radius: 5px"></div>
-  </div>
-  <div>
-    <label for="category-input">Category:</label>
-    <select id="category-input" name="category">
-      <option value="Beach">Beach</option>
-      <option value="For sunrise">For sunrise</option>
-      <option value="For sunset">For sunset</option>
-      <option value="To bike">To bike</option>
-      <option value="To eat">To eat</option>
-      <option value="To hike">To hike</option>
-      <option value="To hike">To relax</option>
-      <option value="To walk">To walk</option>
-      <option value="To visit">To visit</option>
-    </select>
-    <div class="form-group">
-      <label for="image-input">Image:</label>
-      <input type="file" name="image" id="image-input" class="form-control-file" />
+      <div id="map" style="width: 100%; height: 500px; border-radius: 5px"></div>
     </div>
+    <div>
+      <label for="category-input">Category:</label>
+      <select id="category-input" name="category">
+        <option value="Beach">Beach</option>
+        <option value="For sunrise">For sunrise</option>
+        <option value="For sunset">For sunset</option>
+        <option value="To bike">To bike</option>
+        <option value="To eat">To eat</option>
+        <option value="To hike">To hike</option>
+        <option value="To hike">To relax</option>
+        <option value="To walk">To walk</option>
+        <option value="To visit">To visit</option>
+      </select>
+      <div class="form-group">
+        <label for="image-input">Image:</label>
+        <input type="file" name="image" id="image-input" class="form-control-file" />
+      </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </div>
-  <div>
-    <a href="/user-profile" class="btn btn-secondary">Back</a>
-  </div>
-
-</form>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+    <div>
+      <a href="/user-profile" class="btn btn-secondary">Back</a>
+    </div>
+  </form>
+</div>
