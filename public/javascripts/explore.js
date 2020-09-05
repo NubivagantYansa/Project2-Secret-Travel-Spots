@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let item = "";
 
         // 1.loop through array of objects - 2. deconstruct properties name, address,category - 3. show only those with category = spots.config.params.id
-        let result = obj.filter((spot) => spot.category == input);
+        let result = obj.filter((spot) => spot.category === input);
 
         result.forEach((spot) => {
           const { _id, name, description, address, category, imageUrl } = spot;
