@@ -20,7 +20,7 @@
         <p> {{this.content}}</p>
       </div>
       <div>
-        <form action="/spot-details/{{_id}}/{{comments.[comments.length-1]._id}}/delete" method="POST">
+        <form action="/spot-details/{{_id}}/{{comments._id}}/delete" method="POST">
           <button type="submit" class="btn btn-primary">Delete</button>
         </form>
       </div>
