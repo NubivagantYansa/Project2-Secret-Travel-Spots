@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("error-message").innerHTML = err;
           return;
         }
-        //window.location = response.data.path; //  Replaces the 'render page' of the backend.
+        window.location = response.data.path; //  Replaces the 'render page' of the backend.
       })
       .catch((err) => {
         console.log("these was an error with your axios request", err);
