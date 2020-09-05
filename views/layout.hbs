@@ -18,8 +18,12 @@
 <body class="text-center p-3 p-md-5 m-md-3 text-center bg-light">
 
   <!--Nav Bar-->
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="/">Logo</a>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="navbar">
+
+    <a href="/">
+      <img id="navbar-logo" alt="logo" src="../images/logoSecret_green.png">
+    </a>
+
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
       aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -43,7 +47,7 @@
         </li>
       </ul>
       <form id="logout-form" action="/logout" method="POST">
-        <button class="btn btn-outline-success my-2 my-sm-0">Logout</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" id="logout-bt">Logout</button>
       </form>
     </div>
   </nav>

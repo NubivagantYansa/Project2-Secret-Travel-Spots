@@ -7,3 +7,15 @@ a {
   text-decoration: none;
   color: black;
 }
+
+#navbar-logo {
+  width: 20px;
+}
+
+#navbar {
+  background: #2cac6e;
+}
+
+#logout-bt {
+  color: white;
+}
