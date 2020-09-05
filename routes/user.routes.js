@@ -137,52 +137,35 @@ router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
 router.post(
   "/user-spots/:spotId/edit",
   isLoggedMiddleware,
-  // fileUploader.single("image"),
-  (req, res) => {
+  async (req, res) => {
     console.log("this is the body", req.body);
     const { spotId } = req.params;
-    //console.log("this is the body", req.body);
-    let { name, description, address, location, category, imageUrl } = req.body;
 
-    // const data2 = Object.entries(req.body)
-    //   .filter((element) => element[1])
-    //   .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
+    const data = Object.entries(req.body)
+      .filter((element) => element[1])
+      .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
 
-    // validation for empty fields: No empty fields allowed
-    // if (!name || !description || !address) {
-    //   res.render("user/edit-spot", {
-    //     errorMessage:
-    //       "All fields are mandatory. Please provide name, descritpion, address and category!",
-    //   });
-    // }
-    //   controls image in edit
+    const { address } = data;
+    let location;
 
-    // if (req.file) {
-    //   imageUrl = req.file.path;
-    // } else {
-    //   imageUrl = req.body.existingImage;
-    // }
-
-    //  transform address in coordinates
-    location = geocoder.geocode(address).then((response) => {
-      // format as a Point
-      location = {
+    if (address) {
+      location = await geocoder.geocode(address).then((response) => ({
         type: "Point",
         coordinates: [response[0].longitude, response[0].latitude],
         formattedAddress: response[0].formattedAddress,
-      };
+      }));
+      data.location = location;
+    }
+    try {
+      const response = await Spot.findByIdAndUpdate(spotId, data, {
+        new: true,
+      });
 
-      Spot.findByIdAndUpdate(
-        spotId,
-        { name, description, address, location, category, imageUrl },
-        { new: true }
-      )
-        .then((response) => {
-          console.log("this is response from edit", response);
-          res.json({ path: "/user-profile/user-spots/" });
-        })
-        .catch((err) => console.log(`error while editing a spot ${err}`));
-    });
+      console.log("this is response from edit", response);
+      return res.json({ path: "/user-profile/user-spots/" });
+    } catch (error) {
+      console.log(`error while editing a spot ${error}`);
+    }
   }
 );
 

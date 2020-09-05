@@ -44,10 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const category = document.getElementById("category-input").value;
     const input = document.querySelector(".mapboxgl-ctrl-geocoder input").value;
 
-    sendInput(input, image, name, description, category, _id);
+    sendInput({ input, image, name, description, category, _id });
   });
 
-  const sendInput = (input, image, name, description, category, _id) => {
+  const sendInput = ({
+    input = "",
+    image = "",
+    name,
+    description,
+    category,
+    _id,
+  }) => {
     axios
       .post(`${window.location.origin}/user-profile/user-spots/${_id}/edit`, {
         _id: _id,
@@ -63,6 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //   //dom manipulation for error
         //   return;
         // }
+        // console.log(response.data);
         window.location = response.data.path; //  Replaces the 'render page' of the backend.
       })
       .catch((err) => {
