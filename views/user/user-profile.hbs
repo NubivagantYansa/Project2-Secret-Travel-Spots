@@ -1,18 +1,29 @@
 {{#if user}}
-<section id='main-container'>
+<section class="container-fluid" id='main-container'>
   <h2>Welcome, {{ user.username }}!</h2>
   <p>This is your profile page my friend!</p>
+  <div class="row-12 justify-content-center">
+    <span><a href="/user-profile/create-spot" class="btn btn-primary col-5 m-2 align-self-center">New Spot</a></span>
+  </div>
 
-  <span><a href="/user-profile/create-spot" class="btn btn-primary">New Spot</a></span>
+  <div class="row-12 justify-content-center">
+    <span><a href="/user-profile/user-spots" class="btn btn-primary col-5 m-2 align-self-center">My Spots</a></span>
+  </div>
 
-  <span><a href="/user-profile/user-spots" class="btn btn-primary">My Spots</a></span>
+  <div class="row-12 justify-content-center">
+    <span><a href="/user-profile/user-favourites"
+        class="btn btn-primary col-5 m-2 align-self-center">Favourites</a></span>
+  </div>
 
-  <span><a href="/user-profile/user-favourites" class="btn btn-primary">Favourites</a></span>
+  <div class="row-12 justify-content-center">
+    <span><a href="/user-profile/edit-profile" class="btn btn-primary col-5 m-2 align-self-center">Edit
+        Profile</a></span>
+  </div>
 
-  <span><a href="/user-profile/edit-profile" class="btn btn-primary">Edit Profile</a></span>
-
-  <span><button class="btn btn-danger" id='delete-profile'>Delete my Profile</button>
-  </span>
+  <div class="row-12 justify-content-center">
+    <span><button class="btn btn-primary col-5 m-2 align-self-center" id='delete-profile'>Delete my Profile</button>
+    </span>
+  </div>
 </section>
 
 
