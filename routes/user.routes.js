@@ -23,6 +23,7 @@ const getAllSpots = (req, res) => {
     .catch((err) => console.log(`error while getting the spots page ${err}`));
 };
 //  .To render one spot
+
 const getOneSpot = (req, res) => {
   console.log(req.params);
   const { spotId } = req.params;
@@ -36,13 +37,49 @@ const getOneSpot = (req, res) => {
       },
     })
     .then((singleSpot) => {
-      //console.log(`one spot is showing ${singleSpot}`);
-      res.render("spot-details", singleSpot);
+      const spot = { ...singleSpot.toJSON() };
+      spot.comments = spot.comments.map((comment) => {
+        const userId = req.session.currentUser
+          ? req.session.currentUser._id.toString()
+          : null;
+        return {
+          ...comment,
+          canDelete: comment.author._id.toString() === userId,
+        };
+      });
+      // console.log(`one spot is showing ${JSON.stringify(singleSpot, null, 4)}`);
+      console.log("single spot", { ...spot });
+      res.render("spot-details", {
+        ...spot,
+        spotId: singleSpot._id,
+        user: req.session.currentUser,
+      });
     })
     .catch((err) =>
       console.log(`an error occurred while showing a spot ${err}`)
     );
 };
+
+// const getOneSpot = (req, res) => {
+//   console.log(req.params);
+//   const { spotId } = req.params;
+//   Spot.findById(spotId)
+//     .populate("comments author")
+//     .populate({
+//       path: "comments",
+//       populate: {
+//         path: "author",
+//         model: "User",
+//       },
+//     })
+//     .then((singleSpot) => {
+//       //console.log(`one spot is showing ${singleSpot}`);
+//       res.render("spot-details", singleSpot);
+//     })
+//     .catch((err) =>
+//       console.log(`an error occurred while showing a spot ${err}`)
+//     );
+// };
 
 /*   GET - render USER'S SPOTS page */
 router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
