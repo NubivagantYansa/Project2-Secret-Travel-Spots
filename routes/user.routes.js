@@ -36,7 +36,7 @@ const getOneSpot = (req, res) => {
       },
     })
     .then((singleSpot) => {
-      console.log(`one spot is showing ${singleSpot}`);
+      //console.log(`one spot is showing ${singleSpot}`);
       res.render("spot-details", singleSpot);
     })
     .catch((err) =>
