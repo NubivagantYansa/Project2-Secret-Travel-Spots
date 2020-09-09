@@ -10,6 +10,10 @@ h2 {
   font-family: "Rubik", sans-serif;
 }
 
+h4 {
+  margin-bottom: 2%;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -60,4 +64,40 @@ a {
 
 .carousel-control-next-icon {
   background-image: url("../images/arrow-next.png");
+}
+
+.cat-details {
+  height: 80%;
+  max-height: 650px;
+  max-width: 650px;
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+}
+
+.comment-content {
+  margin: auto;
+  display: flex;
+  justify-self: center;
+}
+
+.comment-div {
+  margin: 2%;
+}
+
+.descrip-cont {
+  height: 80%;
+  max-width: 650px;
+  margin: auto;
+  width: 80%;
+  padding: 30px 0px;
+  text-align: left;
+}
+
+.spots-cont {
+  margin: 5%;
+}
+
+.card-body {
+  margin: 2%;
 }
