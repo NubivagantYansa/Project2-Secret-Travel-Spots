@@ -50,6 +50,30 @@ a {
   background: none;
 }
 
+.home-div {
+  color: white;
+  background-image: url("../images/jakob-owens-MctEgCk1Dm0-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  height: 100vh;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-bottom: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-title {
+  margin-bottom: 4%;
+}
+
+.home-btns > p > a {
+  width: 10rem;
+}
+
 .image-square {
   height: 80%;
   width: 80%;

@@ -1,3 +1,14 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
-<img src="./images/catravel.jpg" style="width: 70%;" alt="travel-cat">
+<div class="home-div">
+  <div class="home-title">
+    <h1>Welcome to the<br><b>{{title}}</b><br>community</h1>
+  </div>
+  <div class="home-btns">
+    {{#if currentUser}}
+    <p><a href="/explore" class="btn btn-primary">Explore</a>
+    <p><a href="/user-profile" class="btn btn-primary">My profile</a>
+      {{else}}
+    <p><a href="/login" class="btn btn-primary">Login</a>
+    <p><a href="/usignup" class="btn btn-primary">Sign up</a>
+      {{/if}}
+  </div>
+</div>
