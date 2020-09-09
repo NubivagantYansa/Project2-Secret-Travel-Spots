@@ -183,3 +183,23 @@ a {
   justify-content: center;
   padding-bottom: 2%;
 }
+
+.choose-file {
+  display: flex;
+  border: none;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.choose-file-input {
+  max-width: 80%;
+}
+
+.btns-create {
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+}
