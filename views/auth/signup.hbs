@@ -1,25 +1,28 @@
-<div class="text-center overflow-hidden p-3 p-md-5 m-md-3 bg-light ">
-  <p class="font-weight-bold">Sign up to contribute to our community!</p>
-  <p> You can add new spots, save your favourites and comment on other people
-    entries!</p>
-</div>
-<div>
+<div class="view text-center p-3 p-md-5 m-md-3">
+
+
   <h2>Signup</h2>
-  <form action="/signup" method="POST" class="form-signin mx-auto" style="width: 300px;">
-    <label for="input-username" class="sr-only">Username</label>
-    <input type="text" id="input-username" name="username" placeholder="Your username" class="form-control" />
+  <br>
+  <p>Sign up to contribute to our community! You can add new spots, save your favourites and comment on other people
+    entries.</p>
+  <br>
+  <div>
+    <form action="/signup" method="POST" class="form-signin mx-auto" style="width: 300px;">
+      <label for="input-username" class="sr-only">Username</label>
+      <input type="text" id="input-username" name="username" placeholder="Your username" class="form-control" />
 
-    <label for="input-email" class="sr-only">Email</label>
-    <input type="email" id="input-email" name="email" placeholder="Your email" class="form-control" />
+      <label for="input-email" class="sr-only">Email</label>
+      <input type="email" id="input-email" name="email" placeholder="Your email" class="form-control" />
 
-    <label for="input-password" class="sr-only">Password</label>
-    <input type="password" name="password" id="input-password" placeholder="********" class="form-control" />
+      <label for="input-password" class="sr-only">Password</label>
+      <input type="password" name="password" id="input-password" placeholder="********" class="form-control" />
 
-    <button type="submit" class="btn btn-lg btn-primary btn-block">Create account</button>
+      <button type="submit" class="btn btn-lg btn-primary btn-block">Create account</button>
 
-    {{!-- error message will be added here --}}
-    {{#if errorMessage}}
-    <p class="error">{{errorMessage}}</p>
-    {{/if}}
-  </form>
+      {{!-- error message will be added here --}}
+      {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+      {{/if}}
+    </form>
+  </div>
 </div>

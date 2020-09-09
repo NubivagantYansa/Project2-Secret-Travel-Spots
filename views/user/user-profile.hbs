@@ -1,41 +1,50 @@
-{{#if user}}
-<section class="container-fluid" id='main-container'>
-  <h2>Welcome, {{ user.username }}!</h2>
-  <p>This is your profile page my friend!</p>
-  <div class="row-12 justify-content-center">
-    <span><a href="/user-profile/create-spot" class="btn btn-primary col-5 m-2 align-self-center">New Spot</a></span>
-  </div>
+<div class="view text-center p-3 p-md-5 m-md-3">
+  {{#if user}}
+  <section class="container-fluid" id='main-container'>
+    <h2>Hello {{ user.username }} 👋</h2>
+    <br>
+    <div class="row-12 justify-content-center div-profile-btn">
+      <h6 class="titles-profile">Add a new spot to your collection</h6>
+      <span><a href="/user-profile/create-spot" class="btn btn-primary col-6 m-2 align-self-center">New
+          Spot</a></span>
+    </div>
+    <br>
+    <div class="row-12 justify-content-center div-profile-btn">
+      <h6>Check all your created spots!</h6>
+      <span><a href="/user-profile/user-spots" class="btn btn-primary col-6 m-2 align-self-center">My
+          Spots</a></span>
+    </div>
+    <br>
+    <div class="row-12 justify-content-center div-profile-btn">
+      <h6>See your favourites spots</h6>
+      <span><a href="/user-profile/user-favourites"
+          class="btn btn-primary col-6 m-2 align-self-center">Favourites</a></span>
+    </div>
+    <br>
+    <div class="row-12 justify-content-center div-profile-btn">
+      <h6>Edit your profile details</h6>
+      <span><a href="/user-profile/edit-profile" class="btn btn-primary col-6 m-2 align-self-center">Edit
+          Profile</a></span>
+    </div>
+    <br>
+    <div class="row-12 justify-content-center div-profile-btn">
+      <h6>Delete your profile</h6>
+      <span><button class="btn btn-primary col-6 m-2 align-self-center" id='delete-profile'>Delete my Profile</button>
+      </span>
+    </div>
+  </section>
 
-  <div class="row-12 justify-content-center">
-    <span><a href="/user-profile/user-spots" class="btn btn-primary col-5 m-2 align-self-center">My Spots</a></span>
-  </div>
-
-  <div class="row-12 justify-content-center">
-    <span><a href="/user-profile/user-favourites"
-        class="btn btn-primary col-5 m-2 align-self-center">Favourites</a></span>
-  </div>
-
-  <div class="row-12 justify-content-center">
-    <span><a href="/user-profile/edit-profile" class="btn btn-primary col-5 m-2 align-self-center">Edit
-        Profile</a></span>
-  </div>
-
-  <div class="row-12 justify-content-center">
-    <span><button class="btn btn-primary col-5 m-2 align-self-center" id='delete-profile'>Delete my Profile</button>
-    </span>
-  </div>
-</section>
 
 
 
-
-{{!-- <a href="/user-profile/edit-profile" class="btn btn-primary">Edit profile</a>
+  {{!-- <a href="/user-profile/edit-profile" class="btn btn-primary">Edit profile</a>
 <form action="/user-profile/{{user._id}}/edit-profile/delete" method="post">
   <button type="submit">Delete</button>
 </form> --}}
 
 
-{{else}}
-<p>Still no logged in user, sorry!</p>
-<a href="/">Login</a>
-{{/if}}
+  {{else}}
+  <p>Still no logged in user, sorry!</p>
+  <a href="/">Login</a>
+  {{/if}}
+</div>

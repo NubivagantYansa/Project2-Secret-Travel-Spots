@@ -1,17 +1,21 @@
-<h2>Edit here your details</h2>
-<form action="/user-profile/edit-profile" method="post">
+<div class="view text-center p-3 p-md-5 m-md-3">
+  <h2>Edit here your details</h2>
+  <br>
+  <p>Please notice you can change your username and email.</p>
 
-  <label for="username-input">Username:</label>
-  <input type="text" name="username" id="username-input" value="{{user.username}}" />
+  <form class="form-signin mx-auto" style="width: 300px;" action="/user-profile/edit-profile" method="post">
 
-  <label for="email-input">email:</label>
-  <input type="text" name="email" id="email-input" value="{{user.email}}" />
+    <label for="username-input"></label>
+    <input type="text" name="username" class="form-control" id="username-input" value="{{user.username}}" />
+    <label for="email-input"></label>
+    <input type="text" name="email" class="form-control" id="email-input" value="{{user.email}}" />
+    <br>
+    <button type="submit" class="btn btn-lg btn-primary btn-block">Update</button>
 
-  <button type="submit">Update</button>
-
-</form>
+  </form>
 
 
-{{#if errorMessage}}
-<p class="error">{{errorMessage}}</p>
-{{/if}}
+  {{#if errorMessage}}
+  <p class="error">{{errorMessage}}</p>
+  {{/if}}
+</div>

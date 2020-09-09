@@ -4,45 +4,45 @@
   href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css" />
 
 {{!-- View --}}
+<div class="view text-center p-3 p-md-5 m-md-3">
+  <h2>Edit here the details of {{spot.name}}</h2>
+  <form id="edit-spot" action="/user-profile/user-spots/{{spot._id}}/edit" method="post" enctype="multipart/form-data">
 
-<h2>Edit here the details of {{spot.name}}</h2>
-<form id="edit-spot" action="/user-profile/user-spots/{{spot._id}}/edit" method="post" enctype="multipart/form-data">
+    <input class="form-control" type="hidden" name="_id" id="_id-input" value="{{spot._id}}" />
 
-  <input class="form-control" type="hidden" name="_id" id="_id-input" value="{{spot._id}}" />
+    <label for="name-input">Name:</label>
+    <input class="form-control" type="text" name="name" id="name-input" value="{{spot.name}}" />
 
-  <label for="name-input">Name:</label>
-  <input class="form-control" type="text" name="name" id="name-input" value="{{spot.name}}" />
+    <label for="description-input">Description:</label>
+    <input class="form-control" type="text" name="description" id="description-input" value="{{spot.description}}">
 
-  <label for="description-input">Description:</label>
-  <input class="form-control" type="text" name="description" id="description-input" value="{{spot.description}}">
-
-  {{!-- <label for="address">Address:</label>
+    {{!-- <label for="address">Address:</label>
   <input type="text" name="address" id="address-input" value="{{spot.address}}" />
   <input type="text" name="location" id="location-input" value="{{spot.location.coordinates}}" /> --}}
 
-  <label for="category-input">Category:</label>
-  <select id="category-input" name="category" value="{{spot.category}}">
-    <option value="Beach">Beach</option>
-    <option value="For sunrise">For sunrise</option>
-    <option value="For sunset">For sunset</option>
-    <option value="To bike">To bike</option>
-    <option value="To eat">To eat</option>
-    <option value="To hike">To hike</option>
-    <option value="To hike">To relax</option>
-    <option value="To walk">To walk</option>
-    <option value="To visit">To visit</option>
+    <label for="category-input">Category:</label>
+    <select id="category-input" name="category" value="{{spot.category}}">
+      <option value="Beach">Beach</option>
+      <option value="For sunrise">For sunrise</option>
+      <option value="For sunset">For sunset</option>
+      <option value="To bike">To bike</option>
+      <option value="To eat">To eat</option>
+      <option value="To hike">To hike</option>
+      <option value="To hike">To relax</option>
+      <option value="To walk">To walk</option>
+      <option value="To visit">To visit</option>
 
-  </select>
+    </select>
 
 
-  <div id="map" style="width: 100%; height: 500px; border-radius: 5px"></div>
-  </div>
+    <div id="map" style="width: 100%; height: 500px; border-radius: 5px"></div>
+</div>
 
-  <label for="image-input">Image:</label>
-  <input type="file" name="image" id="image-input" class="form-control-file" />
-  <input type="text" name="existingImage" hidden id="" value="{{spot.imageUrl}}">
+<label for="image-input">Image:</label>
+<input type="file" name="image" id="image-input" class="form-control-file" />
+<input type="text" name="existingImage" hidden id="" value="{{spot.imageUrl}}">
 
-  <button class="btn btn-primary" type="submit">Update</button>
+<button class="btn btn-primary" type="submit">Update</button>
 </form>
 
 
@@ -54,3 +54,4 @@
 {{#if errorMessage}}
 <p class="error">{{errorMessage}}</p>
 {{/if}}
+</div>

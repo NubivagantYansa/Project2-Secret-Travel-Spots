@@ -1,13 +1,19 @@
 {{!-- {{#if user}} --}}
-<div class="user-spots">
+<div class="view text-center p-3 p-md-5 m-md-3">
   <h2>My secret spots</h2>
+  <br>
   <div id="cont">
     {{#each spots}}
     <div class="card card-body">
       <h4>{{this.name}}</h4>
       <p>{{this.category}}</p>
-      <img class=" rounded mx-auto d-block image-square" src="{{this.imageUrl}}" class="card-img-top" alt="{{name}}">
-      <p><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo-alt" fill="rgb(44,172,110)"
+      {{#if this.imageUrl}}
+      <img class="rounded mx-auto d-block image-square" src="{{this.imageUrl}}" class="card-img-top" alt="{{name}}">
+      {{else}}
+      <a href='https://www.freepik.com/vectors/background' target="_blank"><img
+          class="rounded mx-auto d-block image-square" src="../images/landscape.png" class="card-img-top"
+          alt="{{name}}"></a>
+      {{/if}} <p><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo-alt" fill="rgb(44,172,110)"
           xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd"
             d="M12.166 8.94C12.696 7.867 13 6.862 13 6A5 5 0 0 0 3 6c0 .862.305 1.867.834 2.94.524 1.062 1.234 2.12 1.96 3.07A31.481 31.481 0 0 0 8 14.58l.208-.22a31.493 31.493 0 0 0 1.998-2.35c.726-.95 1.436-2.008 1.96-3.07zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
@@ -15,6 +21,7 @@
         </svg> {{this.location.formattedAddress}}</p>
       <p><a href="/spot-details/{{this.id}}" class="btn btn-primary">See more</a>
     </div>
+    <br>
     {{/each}}
 
   </div>

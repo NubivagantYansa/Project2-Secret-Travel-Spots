@@ -1,8 +1,8 @@
-<div>
+<div class="view text-center p-3 p-md-5 m-md-3">
   {{!-- add favourites --}}
 
   <div>
-    <div class="card card-body text-center position-relative  p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="card-body text-center position-relative">
       <form action="/user-profile/spot-details/{{_id}}/fav" method="post">
       </form>
       <h3>{{name}}</h3>
@@ -12,7 +12,13 @@
             d="M12.166 8.94C12.696 7.867 13 6.862 13 6A5 5 0 0 0 3 6c0 .862.305 1.867.834 2.94.524 1.062 1.234 2.12 1.96 3.07A31.481 31.481 0 0 0 8 14.58l.208-.22a31.493 31.493 0 0 0 1.998-2.35c.726-.95 1.436-2.008 1.96-3.07zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
           <path fill-rule="evenodd" d="M8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
         </svg> {{location.formattedAddress}}</p>
+      {{#if imageUrl}}
       <img class="rounded mx-auto d-block image-square" src="{{imageUrl}}" class="card-img-top" alt="{{name}}">
+      {{else}}
+      <a href='https://www.freepik.com/vectors/background' target="_blank"><img
+          class="rounded mx-auto d-block image-square" src="../images/landscape.png" class="card-img-top"
+          alt="{{name}}"></a>
+      {{/if}}
 
       <div class="cat-details row justify-content-between">
         <h5>{{category}}</h5>
@@ -30,7 +36,7 @@
 
       {{!-- add comment form --}}
 
-      <h4>Have you been here? Leave your review</h4>
+      <h5>Have you been here? Leave your review</h5>
       <form class="form-signin mx-auto" action="/spot-details/{{_id}}/comment" method="POST">
         <textarea name="content" id="comment-content-input" cols="30" rows="2"
           class="form-control card card-body comment-content"></textarea> <br>
@@ -40,8 +46,9 @@
 
 
       {{!-- see comments --}}
-      <h4>Reviews</h4>
+      <h5>Reviews</h5>
       {{#each comments}}
+      <br>
       <div class="comment-div">
         <h6>{{this.author.username}}</h6>
         <div class="card card-body">
@@ -50,6 +57,7 @@
         </div>
         {{!-- delete a comment --}}
         {{#if canDelete}}
+        <br>
         <form action="/spot-details/{{_id}}/comment/delete/{{@root.spotId}}" method="post">
           <button class="btn btn-danger" type="submit">Delete</button>
         </form>

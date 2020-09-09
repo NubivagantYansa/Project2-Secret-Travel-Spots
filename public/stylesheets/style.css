@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,623;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,623;1,700;1,800;1,900&display=swap");
 
+body,
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   padding: 10px;
   font: 14px "Roboto", sans-serif;
@@ -19,6 +28,21 @@ a {
   color: black;
 }
 
+.word-link {
+  font-weight: bold;
+  text-decoration-line: underline;
+}
+
+.word-link:hover {
+  font-weight: bold;
+  color: rgb(77, 77, 77);
+}
+
+.word-link:active {
+  font-weight: bold;
+  color: rgb(77, 77, 77, 0.7);
+}
+
 #navbar-logo {
   width: 20px;
   margin-right: 10px;
@@ -31,6 +55,19 @@ a {
 
 #logout-bt {
   color: white;
+  padding: 5px 0px;
+}
+
+.btn-danger {
+  color: white;
+  background: rgb(77, 77, 77);
+  border: none;
+}
+
+.btn-danger:hover {
+  color: white;
+  background: rgb(77, 77, 77, 0.7);
+  border: none;
 }
 
 .btn-primary {
@@ -122,6 +159,27 @@ a {
   margin: 5%;
 }
 
-.card-body {
-  margin: 2%;
+.view {
+  margin-top: 4rem;
+  height: 100%;
+  width: 100%;
+  vertical-align: middle;
+}
+
+.form-control {
+  margin-top: 2%;
+}
+
+.div-profile-btn {
+  padding-bottom: 5px;
+}
+
+.card {
+  border-width: medium;
+}
+
+.filter-div {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2%;
 }

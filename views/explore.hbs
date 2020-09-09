@@ -1,16 +1,16 @@
-<div class="user-spots">
+<div class="view text-center p-3 p-md-5 m-md-3">
 
   <div>
     {{!-- <span> <img src="../images/secretLogo.png" alt="logo" class="img-fluid"></span> --}}
-    <h1>Explore Page</h1>
+    <h1>Explore around the world</h1>
 
     <div id="map" style="width: 100%; height: 500px; border-radius: 5px;"></div>
 
     <br>
-
-    <div class="">
-      <label for="filter-spots">Filter Spots by Category:</label>
-      <select id="fetch-by-category-input" name="category" value="{{category}}">
+    <h6>Filter by category</h6>
+    <div class="test-center filter-div">
+      <label for="filter-spots"></label>
+      <select id="fetch-by-category-input" class="card" name="category" value="{{category}}">
         <option value="Beach">Beach</option>
         <option value="For sunrise">For sunrise</option>
         <option value="For sunset">For sunset</option>
@@ -22,8 +22,13 @@
         <option value="To visit">To visit</option>
 
       </select>
-      <button id="fetch-by-cat" class="btn btn-primary">Filter</button>
     </div>
+    <div>
+      <button id="fetch-by-cat" class="btn btn-primary">Filter</button>
+      <a href="/explore" class="btn btn-danger">Clear filter</a>
+    </div>
+
+
     <br>
 
     {{!-- <div class="">
@@ -40,8 +45,14 @@
           <div id="slider" class="card card-body {{#if @first }}carousel-item active {{else}} carousel-item {{/if}}">
             <h4>{{this.name}}</h4>
             <p>{{this.category}}</p>
-            <img class=" rounded mx-auto d-block image-square" src="{{this.imageUrl}}" class="card-img-top"
+            {{#if this.imageUrl}}
+            <img class="rounded mx-auto d-block image-square" src="{{this.imageUrl}}" class="card-img-top"
               alt="{{name}}">
+            {{else}}
+            <a href='https://www.freepik.com/vectors/background' target="_blank"><img
+                class="rounded mx-auto d-block image-square" src="../images/landscape.png" class="card-img-top"
+                alt="{{name}}"></a>
+            {{/if}}
             <p><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo-alt" fill="rgb(44,172,110)"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -66,4 +77,5 @@
     {{!-- las-last div --}}
   </div>
   {{!-- last div --}}
+  <br>
 </div>
