@@ -45,3 +45,19 @@ a {
   border: none;
   background: none;
 }
+
+.image-square {
+  height: 80%;
+  width: 80%;
+  max-height: 650px;
+  max-width: 650px;
+  margin-bottom: 2%;
+}
+
+.carousel-control-prev-icon {
+  background-image: url("../images/arrow-prev.png");
+}
+
+.carousel-control-next-icon {
+  background-image: url("../images/arrow-next.png");
+}
