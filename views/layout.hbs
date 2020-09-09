@@ -14,70 +14,69 @@
   <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
 
 </head>
+{{#if currentUser}}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" id="navbar">
 
-<body>
+  <a href="/">
+    <img id="navbar-logo" alt="logo" src="/images/logoSecret_green.png">
+  </a>
 
-  {{#if currentUser}}
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="navbar">
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse" id="navbarsExampleDefault" style="">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/explore">Explore <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/user-profile">Profile <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <form id="logout-form" action="/logout" method="POST">
+      <button id="logout-bt">Logout <span class="sr-only">(current)</span></button>
+    </form>
+  </div>
+</nav>
+{{else}}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" id="navbar">
 
-    <a href="/">
-      <img id="navbar-logo" alt="logo" src="/images/logoSecret_green.png">
-    </a>
+  <a href="/">
+    <img id="navbar-logo" alt="logo" src="/images/logoSecret_green.png">
+  </a>
 
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse" id="navbarsExampleDefault" style="">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/explore">Explore <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/user-profile">Profile <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-      <form id="logout-form" action="/logout" method="POST">
-        <button id="logout-bt">Logout <span class="sr-only">(current)</span></button>
-      </form>
-    </div>
-  </nav>
-  {{else}}
-  <nav class="navbar navbar-expand-md navbar-dark fixed-top" id="navbar">
+  <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse" id="navbarsExampleDefault" style="">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/explore">Explore <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/signup">Signup <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+{{/if}}
 
-    <a href="/">
-      <img id="navbar-logo" alt="logo" src="/images/logoSecret_green.png">
-    </a>
+<body class="text-center p-3 p-md-5 m-md-3 text-center bg-light">
 
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-      aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse" id="navbarsExampleDefault" style="">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/explore">Explore <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/signup">Signup <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  {{/if}}
-
-  {{!-- <div class="body-container"> --}}
-  {{{body}}}
-  {{!-- </div> --}}
+  <div class="body-container">
+    {{{body}}}
+  </div>
 
   <!--Bootstrap js cdn links-->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
