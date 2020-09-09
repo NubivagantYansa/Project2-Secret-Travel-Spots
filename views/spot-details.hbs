@@ -47,13 +47,13 @@
 
       {{!-- see comments --}}
       <h5>Reviews</h5>
+      {{#if comments}}
       {{#each comments}}
       <br>
-      <div class="comment-div">
+      <div>
         <h6>{{this.author.username}}</h6>
         <div class="card card-body">
           <p> {{this.content}}</p>
-
         </div>
         {{!-- delete a comment --}}
         {{#if canDelete}}
@@ -65,6 +65,10 @@
       </div>
 
       {{/each}}
+      {{else}}
+      <p>No reviews yet!</p>
+      {{/if}}
+
 
 
 
