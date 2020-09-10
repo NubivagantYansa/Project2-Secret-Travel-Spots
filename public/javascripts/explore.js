@@ -56,57 +56,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   //. FILTER BY NAME
-  // const filterByName = (id) => {
-  //   axios
-  //     .get(`${window.location.origin}/explore/search`, { params: { id: id } })
 
-  //     .then((spots) => {
-  //       const obj = spots.data;
-  //       const input = spots.config.params.id;
-  //       console.log("json", obj);
-  //       console.log("this is the input from view", spots.config.params.id);
+  //  Event Listener for SEARCH Button
+  document
+    .getElementById("fetch-by-name")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      const name = document.getElementById("fetch-by-name-input").value; // input id of item to be retrived.
+      filterByName(name);
+    });
 
-  //       // DOM manupulation
-  //       let item = "";
+  const filterByName = (name) => {
+    axios
+      .get(`${window.location.origin}/explore/search`, {
+        params: { id: name },
+      })
 
-  //       // 1.loop through array of objects
-  //       // 2. deconstruct properties name, address,category
-  //       // 3. show only those with category = spots.config.params.id
+      .then((spots) => {
+        const obj = spots.data;
+        let name = spots.config.params.id;
+        console.log("json", obj);
+        console.log("this is the input from view", spots.config.params.id);
 
-  //       let result = obj.filter((spot) => spot.category == input);
+        // DOM manupulation
+        let item = "";
 
-  //       result.forEach((obj) => {
-  //         const { name, description, address, category, imageUrl } = obj;
+        name = new RegExp(name, "i");
 
-  //         item += `
-  //       <div class="card card-body">
-  //       <h4>name: ${name}</h4>
-  //       <p>address: ${address}</p>
-  //       <p>category: ${category}</p>
-  //       <p>description: ${description}</p>
-  //       <p><a href="/spot-details/${id}" class="btn btn-primary">See more</a>
-  //     </div>
-  //     <hr>`;
-  //       });
+        let result = obj.filter((spot) => spot.name == name);
 
-  //       document.getElementById("cont").innerHTML = item;
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       err.response.status === 404
-  //         ? alert(`The id doesn't exist.`)
-  //         : alert("Server error! Sorry.");
-  //     });
-  // };
+        result.forEach((obj) => {
+          const { name, description, address, category, imageUrl } = obj;
 
-  // document
-  //   .getElementById("fetch-by-cat")
-  //   .addEventListener("click", function (event) {
-  //     event.preventDefault();
+          item += `
+              <div class="card card-body">
+              <h4>name: ${name}</h4>
+              <p>address: ${address}</p>
+              <p>category: ${category}</p>
+              <p>description: ${description}</p>
+              <p><a href="/spot-details/${id}" class="btn btn-primary">See more</a>
+            </div>
+            <hr>`;
+        });
 
-  //     const category = document.getElementById("fetch-by-category-input").value; // input id of item to be retrived
-  //     filterById(category);
-  //   });
+        document.getElementById("cont").innerHTML = item;
+      })
+      .catch((err) => {
+        console.log(err);
+        err.response.status === 404
+          ? alert(`The id doesn't exist.`)
+          : alert("Server error! Sorry.");
+      });
+  };
 
   /*   MAPBOX SETTINGS  */
   mapboxgl.accessToken =
