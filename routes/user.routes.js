@@ -261,6 +261,31 @@ router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
     .catch((err) => console.log(`Error after creating the favourite: ${err}`));
 });
 
+//remove from spots
+router.post(
+  "/spot-details/:spotId/fav/delete",
+  isLoggedMiddleware,
+  (req, res) => {
+    console.log("this is params", req.params);
+
+    const { spotId } = req.params;
+    User.findByIdAndUpdate(
+      req.session.currentUser._id,
+      { $pull: { favSpots: spotId } },
+      { new: true }
+    )
+      .then((newUser) => {
+        console.log(newUser);
+        req.session.currentUser = newUser;
+        res.redirect("/explore");
+      })
+
+      .catch((err) =>
+        console.log(`Error after creating the favourite: ${err}`)
+      );
+  }
+);
+
 /*  POST - Remove from favourites */
 // router.post(
 //   "/spot-details/:spotId/fav/delete",
