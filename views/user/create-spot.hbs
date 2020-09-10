@@ -10,35 +10,46 @@
 
 
 <div class="view text-center p-3 p-md-5 m-md-3">
+
+  <div class="links text-right">
+    <a href="/user-profile"><svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-arrow-left"
+        fill="rgb(44, 172, 110)" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+      </svg></a>
+  </div>
+
   <div id="error-message"></div>
   <br>
   <h2>Create a new spot</h2>
   <br>
   <form class="form-signin mx-auto" id="create-spot" action="/user-profile/create-spot" method="post"
     enctype="multipart/form-data">
-    <div>
+    <div class="spot-field">
       <h6>Name of the spot*</h6>
       <input type="text" name="name" id="name-input" class=" card form-control"
         placeholder="Add here the name of the spot" />
     </div>
     <br>
-    <div>
+    <div class="spot-field">
       <h6>Description*</h6>
+      <p>Be as descriptive as you can be and give directions on how to get there.</p>
       <textarea name="description" id="description-input" cols="30" rows="5" class="card form-control"
         placeholder="Add here a brief description of the spot"></textarea>
     </div>
     <br>
-    <div>
+    <div class="spot-field">
       {{!-- <label for="address-input">Location:</label>
     <input type="text" name="address" id="address-input" class="form-control"
       placeholder="Type an address <Street, City, (CAP), Country> or click the <Use My Location> button" />
     <button id="get-location" class="btn btn-primary">Use My Location</button> --}}
       <h6>Address*</h6>
+      <p>Confirm your aproximate location on the map!</p>
 
       <div id="map" style="width: 100%; height: 500px; border-radius: 5px"></div>
     </div>
     <br>
-    <div>
+    <div class="spot-field">
       <h6>Category*</h6>
       <div class="test-center filter-div">
         <select class="card" id="category-input" name="category">
@@ -54,8 +65,9 @@
         </select>
       </div>
       <div class="text-center choose-file">
-        <h6>Image</h6>
-        <div class="card-body choose-file">
+
+        <div class="card-body choose-file spot-field">
+          <h6>Image</h6>
           <input type="file" name="image" id="image-input" class="card choose-file-input" />
         </div>
       </div>

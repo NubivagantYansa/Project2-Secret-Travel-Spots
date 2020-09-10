@@ -291,3 +291,35 @@ a {
 .btns-my-spots > p {
   margin: 0% 1%;
 }
+
+.search-filter {
+  margin-top: 2%;
+  display: flex;
+  justify-content: space-around;
+}
+.input-search {
+  max-width: 93px;
+}
+
+.spot-field > p {
+  color: gray;
+  font-size: x-small;
+}
+
+.links {
+  margin-bottom: ;
+}
+
+.links > a {
+  color: rgb(44, 172, 110);
+  text-decoration: underline;
+}
+
+.links > a:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+.forms-spot-details > form {
+  margin-bottom: 50px;
+}

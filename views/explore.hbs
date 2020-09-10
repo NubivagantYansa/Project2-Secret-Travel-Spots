@@ -6,46 +6,51 @@
     <br>
     <div id="map" style="width: 100%; height: 500px; border-radius: 5px;"></div>
     <br>
-    <h6>Search by name</h6>
-    <input id="fetch-by-name-input" type="text" placeholder="search">
-    <button id="fetch-by-name" class="btn btn-primary">Search</button>
-    <br>
-    <h6>Filter by category</h6>
-    <div class="text-center filter-div">
-      <label for="filter-spots"></label>
-      <select id="fetch-by-category-input" class="card" name="category" value="{{category}}">
-        <option value="Beach">Beach</option>
-        <option value="For sunrise">For sunrise</option>
-        <option value="For sunset">For sunset</option>
-        <option value="To bike">To bike</option>
-        <option value="To eat">To eat</option>
-        <option value="To hike">To hike</option>
-        <option value="To hike">To relax</option>
-        <option value="To walk">To walk</option>
-        <option value="To visit">To visit</option>
+    <div class="search-filter text-center">
+      <div>
+        <h6>Search by name</h6>
+        <div class="text-center filter-div">
+          <input class="card input-search" id="fetch-by-name-input" type="text" placeholder="search">
+          <button id="fetch-by-name" class="btn btn-primary">Search</button>
+        </div>
+        <div>
 
-      </select>
+        </div>
+      </div>
+      <div>
+        <h6>Filter by category</h6>
+        <div class="text-center filter-div">
+          <label for="filter-spots"></label>
+          <select id="fetch-by-category-input" class="input-search card" name="category" value="{{category}}">
+            <option value="Beach">Beach</option>
+            <option value="For sunrise">For sunrise</option>
+            <option value="For sunset">For sunset</option>
+            <option value="To bike">To bike</option>
+            <option value="To eat">To eat</option>
+            <option value="To hike">To hike</option>
+            <option value="To hike">To relax</option>
+            <option value="To walk">To walk</option>
+            <option value="To visit">To visit</option>
+
+          </select>
+          <button id="fetch-by-cat" class="btn btn-primary">Filter</button>
+        </div>
+        <div>
+
+        </div>
+      </div>
+
     </div>
-    <div>
-      <button id="fetch-by-cat" class="btn btn-primary">Filter</button>
-      <a href="/explore" class="btn btn-danger">Clear filter</a>
-    </div>
-
-
     <br>
-
-    {{!-- <div class="">
-      <label for="filter-spots-by-name">Find by Name:</label>
-      <input type="text" id="fetch-by-name" name="name">
-      <button id="fetch-by-name">Find</button>
-    </div> --}}
-
+    <a href="/explore" class="btn btn-danger">Clear filters</a>
+    <br>
+    <hr>
 
     <div id="slideShow" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
         <div id="cont">
           {{#each spots}}
-          <div id="slider" class="card card-body {{#if @first }}carousel-item active {{else}} carousel-item {{/if}}">
+          <div id="slider" class="card-body {{#if @first }}carousel-item active {{else}} carousel-item {{/if}}">
             <h4>{{this.name}}</h4>
             <p>{{this.category}}</p>
             {{#if this.imageUrl}}
