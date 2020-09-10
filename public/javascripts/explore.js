@@ -82,8 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let item = "";
 
         name = new RegExp(name, "i");
-
-        let result = obj.filter((spot) => spot.name == name);
+        let result = obj.filter((spot) => spot.name.match(name));
 
         result.forEach((obj) => {
           const { name, description, address, category, imageUrl } = obj;
@@ -94,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <p>address: ${address}</p>
               <p>category: ${category}</p>
               <p>description: ${description}</p>
-              <p><a href="/spot-details/${id}" class="btn btn-primary">See more</a>
+              
             </div>
             <hr>`;
         });
