@@ -71,6 +71,7 @@ App to explore local travel spots.
       - category
 
 - GET /explore/:id - renders spot-details.hbs - (populates with comments)
+
   - body:
     - id
     - name
@@ -213,4 +214,4 @@ content: String, required: true,
 
 ### Slides
 
-[Google Slides Link]()
+[https://docs.google.com/presentation/d/1x75WDtrrWWCMHZMzE20pyFHRwf6e9_9Uqs_MC_meZoE/edit?usp=sharing]()
