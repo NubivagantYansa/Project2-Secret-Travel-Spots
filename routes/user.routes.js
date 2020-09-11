@@ -248,7 +248,7 @@ router.post(
       .then((newUser) => {
         console.log(newUser);
         req.session.currentUser = newUser;
-        res.redirect("/explore");
+        res.redirect("/user-profile/user-favourites");
       })
 
       .catch((err) =>

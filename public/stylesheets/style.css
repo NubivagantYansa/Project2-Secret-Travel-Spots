@@ -70,6 +70,23 @@ a {
   border: none;
 }
 
+.btn-danger:not(:disabled):not(.disabled):active {
+  color: white;
+  background: rgb(77, 77, 77, 0.7);
+  border: none;
+}
+
+.btn-danger:not(:disabled):not(.disabled):focus {
+  color: transparent;
+  background: none;
+  border: none;
+}
+
+.btn-primary:focus {
+  background-color: rgb(77, 77, 77, 0.7);
+  border-color: rgb(77, 77, 77, 0.7);
+}
+
 .btn-primary {
   color: white;
   background: #2cac6e;
@@ -80,6 +97,21 @@ a {
   color: white;
   background: rgb(44, 172, 110, 0.7);
   border: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active {
+  color: white;
+  background: rgb(44, 172, 110, 0.7);
+  border: none;
+}
+
+.btn-primary:not(:disabled):not(.disabled):focus {
+  box-shadow: 0 0 0px rgb(44, 172, 110, 0.7);
+}
+
+.btn-primary:focus {
+  background-color: rgb(44, 172, 110, 0.7);
+  border-color: rgb(44, 172, 110, 0.7);
 }
 
 #logout-bt {
@@ -271,7 +303,7 @@ a {
   margin-right: 1%;
 }
 
-.section-about > div > h3 {
+.section-about > div > h4 {
   margin: 15px;
 }
 
@@ -307,7 +339,7 @@ a {
 }
 
 .links {
-  margin-bottom: ;
+  margin-bottom: 1%;
 }
 
 .links > a {
@@ -320,6 +352,50 @@ a {
   text-decoration: underline;
 }
 
+.forms-spot-details {
+  display: flex;
+}
+
 .forms-spot-details > form {
   margin-bottom: 50px;
+}
+
+.button-fav {
+  background: none;
+  color: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.button-fav:link {
+  background: none;
+  color: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.button-fav:visited {
+  background: none;
+  color: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.button-fav:hover {
+  background: none;
+  color: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.button-fav:active {
+  background: none;
+  color: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
 }
