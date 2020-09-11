@@ -22,7 +22,6 @@ const spotSchema = new Schema(
       type: {
         type: String,
         enum: ["Point"],
-        //required: true,
       },
       coordinates: {
         type: [Number],
@@ -68,26 +67,7 @@ spotSchema.pre("save", async function (next) {
     coordinates: [location[0].longitude, location[0].latitude],
     formattedAddress: location[0].formattedAddress,
   };
-
-  // Do not save address
-  // this.address = undefined;
   next();
 });
-
-// spotSchema.pre("findOneAndUpdate", async function (next) {
-//   const docToUpdate = await this.model.findOne(this.getQuery());
-//   console.log("this is the schema test", docToUpdate);
-//   //const location = await geocoder.geocode(this.address);
-//   //format as a Point
-//   docToUpdate.location = {
-//     type: "Point",
-//     coordinates: [2, 1],
-//     formattedAddress: "ajdsklasdaklsd randooom",
-//   };
-//   docToUpdate.save();
-//   // Do not save address
-//   // this.address = undefined;
-//   next();
-// });
 
 module.exports = model("Spot", spotSchema);
