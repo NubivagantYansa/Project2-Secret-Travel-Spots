@@ -60,27 +60,6 @@ const getOneSpot = (req, res) => {
     );
 };
 
-// const getOneSpot = (req, res) => {
-//   console.log(req.params);
-//   const { spotId } = req.params;
-//   Spot.findById(spotId)
-//     .populate("comments author")
-//     .populate({
-//       path: "comments",
-//       populate: {
-//         path: "author",
-//         model: "User",
-//       },
-//     })
-//     .then((singleSpot) => {
-//       //console.log(`one spot is showing ${singleSpot}`);
-//       res.render("spot-details", singleSpot);
-//     })
-//     .catch((err) =>
-//       console.log(`an error occurred while showing a spot ${err}`)
-//     );
-// };
-
 /*   GET - render USER'S SPOTS page */
 router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
   Spot.find({ author: req.session.currentUser._id })
@@ -221,15 +200,7 @@ router.post(
 /*  GET -  render USER's favourite spots   */
 router.get("/user-favourites", isLoggedMiddleware, (req, res, next) => {
   User.findById(req.session.currentUser._id)
-    // ({author: req.session.currentUser._id})
     .populate("favSpots")
-    // .populate({
-    //   path: "favSpots",
-    //   populate: {
-    //     path: "author",
-    //     model: "Spot",
-    //   },
-    // })
     .then((spotsFromDb) => {
       console.log(`spots ${JSON.stringify(spotsFromDb, null, 4)} here`);
       res.render("user/favourite-spots", { spots: spotsFromDb });
@@ -255,13 +226,13 @@ router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
     .then((newUser) => {
       console.log(newUser);
       req.session.currentUser = newUser;
-      res.redirect("/explore");
+      res.redirect("/user-profile/user-favourites");
     })
 
     .catch((err) => console.log(`Error after creating the favourite: ${err}`));
 });
 
-/*  POST -  remoce a favourite spot   */
+/*  POST -  remove a favourite spot   */
 router.post(
   "/spot-details/:spotId/fav/delete",
   isLoggedMiddleware,
@@ -304,25 +275,8 @@ router.get("/edit-profile", isLoggedMiddleware, (req, res) => {
 router.post("/edit-profile", isLoggedMiddleware, (req, res) => {
   const userId = req.session.currentUser._id;
 
-  //validation for empty fields:
-  //.1 No empty fields allowed
-  // if (!username || !email) {
-  //   res.render("/edit-profile", {
-  //     errorMessage:
-  //       "All fields are mandatory. Please provide your username, email and password.",
-  //   });
-  // }
+  //validation for empty fields: Do not update empty blanks (hard-core)
 
-  //.2 Do not update empty blanks (easy)
-  // const data = {};
-  // if (username) {
-  //   data.username = username;
-  // }
-  // if (email) {
-  //   data.email = email;
-  // }
-
-  //.3 Do not update empty blanks (hard-core)
   const data2 = Object.entries(req.body)
     .filter((element) => element[1])
     .reduce((acc, val) => ({ ...acc, [val[0]]: val[1] }), {});
@@ -341,7 +295,6 @@ router.post("/:userID/edit-profile/delete", isLoggedMiddleware, (req, res) => {
 
   User.findByIdAndDelete(userId)
     .then((response) => {
-      // alert(response.data);
       req.session.destroy();
       res.redirect("/signup");
     })
