@@ -30,6 +30,13 @@ const getOneSpot = (req, res) => {
         model: "User",
       },
     })
+    .populate({
+      path: "author",
+      populate: {
+        path: "author",
+        model: "User",
+      },
+    })
     .then((singleSpot) => {
       const spot = { ...singleSpot.toJSON() };
       spot.comments = spot.comments.map((comment) => {
