@@ -16,7 +16,6 @@ const getAllSpots = (req, res) => {
   Spot.find()
     .populate("author")
     .sort({ createdAt: -1 })
-    .limit(10)
     .then((spots) => {
       res.render("explore", { spots: spots });
     })
@@ -25,7 +24,6 @@ const getAllSpots = (req, res) => {
 //  .To render one spot
 
 const getOneSpot = (req, res) => {
-  console.log(req.params);
   const { spotId } = req.params;
   Spot.findById(spotId)
     .populate("comments author")
@@ -47,8 +45,7 @@ const getOneSpot = (req, res) => {
           canDelete: comment.author._id.toString() === userId,
         };
       });
-      // console.log(`one spot is showing ${JSON.stringify(singleSpot, null, 4)}`);
-      console.log("single spot", { ...spot });
+
       res.render("spot-details", {
         ...spot,
         spotId: singleSpot._id,
@@ -65,11 +62,10 @@ router.get("/user-spots", isLoggedMiddleware, (req, res, next) => {
   Spot.find({ author: req.session.currentUser._id })
     .populate("author")
     .then((spotsFromDb) => {
-      console.log(`spots ${JSON.stringify(spotsFromDb, null, 4)} here`);
       res.render("user/user-spots", { spots: spotsFromDb });
     })
     .catch((err) =>
-      console.log(`something happened while getting movies ${err}`)
+      console.log(`Error when rendering the user's spots page ${err}`)
     );
 });
 
@@ -97,8 +93,6 @@ router.post(
   (req, res) => {
     const { address, name, description, category, imageUrl } = req.body;
 
-    console.log("this is req body", req.body);
-
     if (!name || !description || !address) {
       res.json({
         errorMessage:
@@ -116,7 +110,6 @@ router.post(
       imageUrl,
     })
       .then((newSpot) => {
-        console.log("THIS IS NEW SPOT", newSpot);
         User.findByIdAndUpdate(
           req.session.currentUser._id,
           { $addToSet: { spots: newSpot._id } },
@@ -138,7 +131,6 @@ router.get("/user-spots/:spotId/edit", isLoggedMiddleware, (req, res) => {
   const { spotId } = req.params;
   Spot.findById(spotId)
     .then((spotToEdit) => {
-      console.log(spotToEdit);
       res.render("user/edit-spot", {
         javascript: "editSpot",
         spot: spotToEdit,
@@ -154,7 +146,6 @@ router.post(
   "/user-spots/:spotId/edit",
   isLoggedMiddleware,
   async (req, res) => {
-    console.log("this is the body", req.body);
     const { spotId } = req.params;
 
     const data = Object.entries(req.body)
@@ -177,7 +168,6 @@ router.post(
         new: true,
       });
 
-      console.log("this is response from edit", response);
       return res.json({ path: "/user-profile/user-spots/" });
     } catch (error) {
       console.log(`error while editing a spot ${error}`);
@@ -202,11 +192,10 @@ router.get("/user-favourites", isLoggedMiddleware, (req, res, next) => {
   User.findById(req.session.currentUser._id)
     .populate("favSpots")
     .then((spotsFromDb) => {
-      console.log(`spots ${JSON.stringify(spotsFromDb, null, 4)} here`);
       res.render("user/favourite-spots", { spots: spotsFromDb });
     })
     .catch((err) =>
-      console.log(`something happened while getting movies ${err}`)
+      console.log(`Error while rendering user's favourite spots page ${err}`)
     );
 });
 
@@ -215,8 +204,6 @@ router.get("/user-favourites/:spotId", isLoggedMiddleware, getAllSpots);
 
 /*  POST -  create new favourite spot   */
 router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
-  console.log("this is params", req.params);
-
   const { spotId } = req.params;
   User.findByIdAndUpdate(
     req.session.currentUser._id,
@@ -224,7 +211,6 @@ router.post("/spot-details/:spotId/fav", isLoggedMiddleware, (req, res) => {
     { new: true }
   )
     .then((newUser) => {
-      console.log(newUser);
       req.session.currentUser = newUser;
       res.redirect("/user-profile/user-favourites");
     })
@@ -237,8 +223,6 @@ router.post(
   "/spot-details/:spotId/fav/delete",
   isLoggedMiddleware,
   (req, res) => {
-    console.log("this is params", req.params);
-
     const { spotId } = req.params;
     User.findByIdAndUpdate(
       req.session.currentUser._id,
@@ -246,7 +230,6 @@ router.post(
       { new: true }
     )
       .then((newUser) => {
-        console.log(newUser);
         req.session.currentUser = newUser;
         res.redirect("/user-profile/user-favourites");
       })

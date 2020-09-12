@@ -44,7 +44,7 @@ router.post("/signup", (req, res, next) => {
     })
     .then((userFromDB) => {
       req.session.currentUser = userFromDB;
-      console.log("Newly created user is: ", userFromDB);
+      console.log("Newly created user");
       res.redirect("/user-profile");
     })
     .catch((error) => {
@@ -103,7 +103,6 @@ router.post("/logout", (req, res) => {
 });
 
 router.get("/user-profile", (req, res, next) => {
-  // console.log('your sess exp: ', req.session.cookie.expires);
   if (req.session.currentUser) {
     res.render("user/user-profile", {
       user: req.session.currentUser,

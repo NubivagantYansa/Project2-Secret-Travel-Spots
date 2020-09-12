@@ -10,8 +10,8 @@ const { create } = require("../models/User.model");
 const getAllSpots = (req, res) => {
   Spot.find()
     .populate("author")
-    // .sort({ createdAt: -1 })
-    // .limit(10)
+    .sort({ createdAt: -1 })
+
     .then((spots) => {
       res.render("explore", { spots: spots, javascript: "explore" });
     })
@@ -20,7 +20,6 @@ const getAllSpots = (req, res) => {
 
 // .To render one spot
 const getOneSpot = (req, res) => {
-  console.log(req.params);
   const { spotId } = req.params;
   Spot.findById(spotId)
     .populate("comments author")
@@ -42,8 +41,7 @@ const getOneSpot = (req, res) => {
           canDelete: comment.author._id.toString() === userId,
         };
       });
-      // console.log(`one spot is showing ${JSON.stringify(singleSpot, null, 4)}`);
-      console.log("single spot", { ...spot });
+
       res.render("spot-details", {
         ...spot,
         spotId: singleSpot._id,

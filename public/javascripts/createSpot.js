@@ -72,7 +72,10 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location = response.data.path; //  Replaces the 'render page' of the backend.
       })
       .catch((err) => {
-        console.log("these was an error with your axios request", err);
+        console.log(
+          "these was an error with your axios request when creating a spot",
+          err
+        );
       });
   };
 

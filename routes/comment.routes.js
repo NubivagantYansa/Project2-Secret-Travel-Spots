@@ -23,20 +23,16 @@ router.post("/spot-details/:spotId/comment", isLoggedMiddleware, (req, res) => {
   let newComment;
   newComment = new Comment({ author: req.session.currentUser._id, content });
 
-  // 3. when new comment is created, we save it ...
+  //  when new comment is created, we save it
   newComment
     .save()
     .then((dbComment) => {
-      console.log("this is dbcomment", dbComment);
-      // ... and push its ID in the array of comments that belong to this specific post
-      // dbSpot.comments.push(dbComment._id);
       Spot.findByIdAndUpdate(
         spotId,
         { $addToSet: { comments: dbComment._id } },
         { new: true }
       )
         .then((updatedSpot) => {
-          console.log("this is what i get after saving comment", updatedSpot);
           return res.redirect(`/spot-details/${updatedSpot._id}`);
         })
         .catch((err) =>
@@ -54,13 +50,9 @@ router.post(
   (req, res) => {
     const { commentId, spotId } = req.params;
     const userId = req.session.currentUser._id;
-    // console.log("current", userId);
-    // console.log("comment id here", commentId);
-    // console.log("author", author);
 
     Comment.findById(commentId)
       .then((response) => {
-        console.log("response", response);
         if (userId.toString() !== response.author.toString()) {
           return Spot.findById(spotId).then((singleSpot) => {
             res.render("spot-details", {
@@ -77,7 +69,6 @@ router.post(
         ).then((singleSpot) => {
           Comment.findByIdAndDelete(commentId)
             .then(() => {
-              console.log("singleSpot ", singleSpot);
               res.redirect(`/spot-details/${spotId}`);
             })
             .catch((err) =>

@@ -9,16 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((spots) => {
         const obj = spots.data;
         const input = spots.config.params.id;
-        console.log("json", obj);
-        console.log("this is the input from view", spots.config.params.id);
-
         let item = "";
 
         // 1.loop through array of objects - 2. deconstruct properties name, address,category - 3. show only those with category = spots.config.params.id
         let result = obj.filter((spot) => spot.category === input);
 
         result.forEach((spot) => {
-          const { _id, name, description, address, category, imageUrl } = spot;
+          const { _id, name, address, category, imageUrl } = spot;
 
           item += `
           <div class="card card-body">
@@ -39,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("cont").innerHTML = item;
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err, "Error while filtering by category");
         err.response.status === 404
           ? alert(`The id doesn't exist.`)
           : alert("Server error! Sorry.");
@@ -75,8 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((spots) => {
         const obj = spots.data;
         let name = spots.config.params.id;
-        console.log("json", obj);
-        console.log("this is the input from view", spots.config.params.id);
 
         // DOM manupulation
         let item = "";
@@ -85,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let result = obj.filter((spot) => spot.name.match(name));
 
         result.forEach((obj) => {
-          const { name, description, address, category, imageUrl, _id } = obj;
+          const { name, address, category, imageUrl, _id } = obj;
 
           item += `
           <div class="card card-body">
@@ -106,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("cont").innerHTML = item;
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err, "Error while filtering by name");
         err.response.status === 404
           ? alert(`The id doesn't exist.`)
           : alert("Server error! Sorry.");
@@ -191,11 +186,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       .then((spots) => {
         const obj = spots.data; // list of spots
-        console.log("this is json", obj);
 
         // 2. use map to iterate and return in the right format the spots
         const spotsList = obj.map((spot) => {
-          console.log("inside map", spot);
           return {
             type: "Feature",
             geometry: {
@@ -213,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return spotsList;
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err, "Error with Mapbox");
         err.response.status === 404
           ? alert(`The id doesn't exist.`)
           : alert("Server error! Sorry.");

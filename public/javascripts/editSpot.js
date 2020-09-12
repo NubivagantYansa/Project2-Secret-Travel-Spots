@@ -67,14 +67,16 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((response) => {
         //  Show ERROR MESSAGE if there are missing inputs.
         // if (response.data.errorMessage) {
-        //   //dom manipulation for error
+        //dom manipulation for error
         //   return;
         // }
-        // console.log(response.data);
         window.location = response.data.path; //  Replaces the 'render page' of the backend.
       })
       .catch((err) => {
-        console.log("these was an error with your axios request", err);
+        console.log(
+          err,
+          "There was an error with your axios request while editing the spot."
+        );
       });
   };
 
